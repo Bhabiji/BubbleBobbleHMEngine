@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Patterns">
+      <UniqueIdentifier>{6118a4ef-7407-43a9-bc54-8040697746b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{4f1e1ff5-5895-47ed-851d-a694c6e1c136}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Help">
+      <UniqueIdentifier>{f870c9ac-901b-4f9d-9b80-64d9d3dd3836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{effcf672-6680-4901-a7ba-61652b2f0cea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{654385b2-fec1-479a-9c9e-679e9d74f6c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\RenderingComponents">
+      <UniqueIdentifier>{29fdd614-0e88-4f2b-b9c4-8731cfcb262f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\PhysicsComponent">
+      <UniqueIdentifier>{cbf354be-18a6-441c-b6b2-0b319171616b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\PhysicsComponent\ColliderComponents">
+      <UniqueIdentifier>{d957b9fd-830d-40c6-aeb3-2c7942664761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Actors">
+      <UniqueIdentifier>{dc15bc8f-ff83-404a-97ac-16c546b7b71e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\CounterComponents">
+      <UniqueIdentifier>{71234707-99ab-4201-8249-037e7810ab83}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BubbleBobble.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Help</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockColliderComponent.cpp">
+      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterColliderComponent.cpp">
+      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderComponent.cpp">
+      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>Components\RenderingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteComponent.cpp">
+      <Filter>Components\RenderingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>Components\RenderingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponent.cpp">
+      <Filter>Components\RenderingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileComponent.cpp">
+      <Filter>Components\PhysicsComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerComponent.cpp">
+      <Filter>Components\PhysicsComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorComponent.cpp">
+      <Filter>Components\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerControlComponent.cpp">
+      <Filter>Components\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCComponent.cpp">
+      <Filter>Components\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeTimeComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MortalComponent.cpp">
+      <Filter>Components\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Help</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupComponent.cpp">
+      <Filter>Components\RenderingComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="CounterComponent.cpp">
+      <Filter>Components\CounterComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreCounterComponent.cpp">
+      <Filter>Components\CounterComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeCounterComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HiveMindPCH.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BubbleBobble.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Source Files\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSValues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Help</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives.h">
+      <Filter>Help</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Help</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Help</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockColliderComponent.h">
+      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterColliderComponent.h">
+      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderComponent.h">
+      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Components\RenderingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteComponent.h">
+      <Filter>Components\RenderingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>Components\RenderingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>Components\RenderingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.h">
+      <Filter>Help</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Help</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileComponent.h">
+      <Filter>Components\PhysicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerComponent.h">
+      <Filter>Components\PhysicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorComponent.h">
+      <Filter>Components\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControlComponent.h">
+      <Filter>Components\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCComponent.h">
+      <Filter>Components\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeTimeComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MortalComponent.h">
+      <Filter>Components\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupComponent.h">
+      <Filter>Components\RenderingComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="CounterComponent.h">
+      <Filter>Components\CounterComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreCounterComponent.h">
+      <Filter>Components\CounterComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeCounterComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
