@@ -3,9 +3,7 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "BulletManager.h"
-#include "InputManager.h"
 #include "LevelManager.h"
-#include "PlayerCharacter.h"
 #include "Renderer.h"
 #include "Scene.h"
 #include "BubbleBobble.h"
@@ -86,10 +84,6 @@ void HiveMind::BubbleBobble::LoadGame() const
 	player->CreatePlayer(SpriteConfig{ 8, 5 });
 	scene->Add(player);
 
-	GameObject* maita = new GameObject();
-	maita->CreateMaita();
-	scene->Add(maita);
-
 	SceneManager::GetInstance().Initialize();
 	SceneManager::GetInstance().PostInitialize();
 
@@ -115,27 +109,42 @@ void HiveMind::BubbleBobble::Run()
 	{
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
-		auto& input = InputManager::GetInstance();
 		//COMMANDS
-		JumpCommand jumpCommand{};
-		LeftCommand leftCommand{};
-		RightCommand rightCommand{};
-		ShootCommand shootCommand{};
-
-		input.AddInputConfig(XINPUT_GAMEPAD_A, &jumpCommand);
-		input.AddInputConfig(XINPUT_GAMEPAD_DPAD_RIGHT, &rightCommand);
-		input.AddInputConfig(XINPUT_GAMEPAD_DPAD_LEFT, &leftCommand);
-		input.AddInputConfig(XINPUT_GAMEPAD_B, &shootCommand);
-
+		
+		float levelTransitionTimer{0};
+		float updatePauseTimer{ 0 };
+		bool pausePhysics{ false };
 		bool doContinue = true;
 		while (doContinue)
 		{
 			const auto currentTime = high_resolution_clock::now();
 
 			/*doContinue = input.ProcessInput();*/
-			input.ProcessInput();
-			sceneManager.Update(m_DeltaTime);
+			if (!pausePhysics)
+			{
+				sceneManager.Update(m_DeltaTime);
+			}
+			if (pausePhysics)
+			{
+				updatePauseTimer += m_DeltaTime;
+				if (updatePauseTimer >= 2.f)
+				{
+					pausePhysics = false;
+					updatePauseTimer = 0;
+				}
+			}
 			sceneManager.DeleteInactives();
+			if(LevelManager::GetInstance().GetEnemyCount() == 0)
+			{
+				levelTransitionTimer += m_DeltaTime;
+				if(levelTransitionTimer >= 5.f )//If enemies are dead still give 5 seconds to pick up remaining potential pickups
+				{
+					LevelManager::GetInstance().LoadNextLevel();
+					sceneManager.GetActiveScene()->BindEnemiesAndTarget();
+					levelTransitionTimer = 0;
+					pausePhysics = true;
+				}
+			}
 			renderer.Render();
 			auto sleepTime = duration_cast<duration<float>>(currentTime + milliseconds(MsPerFrame) - high_resolution_clock::now());
 			this_thread::sleep_for(sleepTime);

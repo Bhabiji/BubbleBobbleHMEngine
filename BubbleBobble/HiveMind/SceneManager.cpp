@@ -11,7 +11,7 @@ void HiveMind::SceneManager::Initialize()
 void HiveMind::SceneManager::PostInitialize()
 {
 	for (auto& scene : m_Scenes)
-		scene->PostInitialize();
+		scene->BindEnemiesAndTarget();
 }
 
 void HiveMind::SceneManager::Update(const float& deltaTime)

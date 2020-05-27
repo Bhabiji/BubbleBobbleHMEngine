@@ -45,16 +45,9 @@ void HiveMind::Scene::DeleteInactives()
 	//delete all inactive objects
 	while (it != m_Objects.end()) 
 	{
-		if ((*it)->HasComponent<LifeTimeComponent>())
+		if (!(*it)->IsActive())
 		{
-
-			if (!(*it)->GetComponent<LifeTimeComponent>()->IsActive())
-			{
-
-				it = m_Objects.erase(it);
-			}
-			else
-				it++;
+			it = m_Objects.erase(it);
 		}
 		else
 			++it;
@@ -84,23 +77,23 @@ void HiveMind::Scene::Initialize()
 	}
 }
 
-void HiveMind::Scene::PostInitialize()
+void HiveMind::Scene::BindEnemiesAndTarget()
 {
 	//SET THE TARGET TO PLAYER FOR ALL ENEMIES
 	std::vector<GameObject*>::iterator it = m_Objects.begin();
 	while (it != m_Objects.end())
 	{
-		if ((*it)->HasComponent<PlayerControlComponent>())
+		if ((*it)->HasComponent<ActorComponent>() && !(*it)->GetComponent<ActorComponent>()->IsNPC())
 			break;
 		else
 			it++;
 	}
-	if (it != m_Objects.end() && (*it)->HasComponent<PlayerControlComponent>())
+	if (it != m_Objects.end())
 	{
 		for (auto& object : m_Objects)
 		{
-			if (object->HasComponent<NPCComponent>())
-				object->GetComponent<NPCComponent>()->SetTarget(*it);
+			if (object->HasComponent<ActorComponent>() && object->GetComponent<ActorComponent>()->IsNPC())
+				object->GetComponent<ActorComponent>()->SetTarget(*it);
 		}
 	}
 

@@ -8,19 +8,16 @@
 #include "TextComponent.h"
 
 //UI
-//#include "SubjectComponent.h"
 #include "UIComponent.h"
 
 #include "ActorComponent.h"
 #include "SpriteComponent.h"
-#include "NPCComponent.h"
-#include "PlayerControlComponent.h"
 #include "MortalComponent.h"
 //COUNTERS
 #include "CounterComponent.h"
 #include "ScoreCounterComponent.h"
-#include "LifeCounterComponent.h"
-
+#include "HealthCounterComponent.h"
+#include "ControllerComponent.h"
 
 #include "PickupComponent.h"
 //TRANSFORMATIONS
@@ -31,3 +28,6 @@
 #include "CharacterColliderComponent.h"
 #include "BlockColliderComponent.h"
 #include "ProjectileComponent.h"
+
+//CHARACTERS
+#include "HealthComponent.h"

@@ -35,7 +35,9 @@ namespace HiveMind
 		void CreateMaita(FPoint3& pos);
 		void CreateScorePickup(const int& whichPickup, const FPoint3& pos, std::vector<GameObject*> pPlayerVec);
 		void CreateScorePickup(const int& whichPickup, const FPoint3& pos, GameObject* pPlayer);
-
+		void CreateFireBall(const bool isLookingLeft, const FPoint3& pos, const FPoint2& velocity, const float lifeTime);
+		bool IsActive() const;
+		bool SetActive(const bool active);
 
 		void SetTexture(const std::string& filename, const std::string& texName);
 		void SetPosition(const FPoint2& pos);
@@ -65,6 +67,7 @@ namespace HiveMind
 	private:
 		TransformComponent* m_pTransform;
 		std::vector<BaseComponent*> m_pComponents;
+		bool m_IsActive;
 		
 	};
 }

@@ -11,11 +11,13 @@ namespace HiveMind
 		CounterComponent(Font* pFont, const int& initScore,const bool enableStaticPos, const FPoint2& staticPos);
 
 		virtual ~CounterComponent();
-		void AddScore(const int& toAddScore0);
+		void AddToCounter(const int& toAddCount);
+		void SetCounter(const int& toSetCount);
+
 		virtual void Initialize() override;
 		virtual void Update(const float& elapsedSec) override;
 	protected:
-		int m_Score;
+		int m_InitCount;
 		Font* m_pFont;
 	private:
 	};

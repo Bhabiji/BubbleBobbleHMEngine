@@ -15,7 +15,8 @@ namespace HiveMind
 		CharacterColliderComponent(const FPoint2& pos, const RectI& collisionArea);
 		virtual ~CharacterColliderComponent();
 		virtual void RayHitObstacle(const GameObject* objectsToCheck, const FPoint2& objPos);
-		virtual bool IsColliding(const FPoint2& Point);
+		virtual bool IsCollidingVertically(const FPoint2& Point);
+		virtual bool IsCollidingHorizontally(const FPoint2& Point);
 		ColliderBox GetCollisionResults() const;
 		void ResetCollision();
 	protected:

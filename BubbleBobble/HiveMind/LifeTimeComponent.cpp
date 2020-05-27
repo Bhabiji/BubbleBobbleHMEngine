@@ -1,5 +1,5 @@
 #include "LifeTimeComponent.h"
-
+#include "GameObject.h"
 HiveMind::LifeTimeComponent::LifeTimeComponent(const float lifeTime, const bool isTimer)
 	:m_MaxLifeTime{lifeTime}
 	, m_LifeTime{}
@@ -35,7 +35,7 @@ void HiveMind::LifeTimeComponent::Update(const float& deltaTime)
 		m_LifeTime -= deltaTime;
 		if (m_LifeTime <= 0)
 		{
-			m_Active = false;
+			GetGameObject()->SetActive(false);
 		}
 	}
 }

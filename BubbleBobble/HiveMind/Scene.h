@@ -12,7 +12,7 @@ namespace HiveMind
 		void Add(GameObject* object);
 
 		void Initialize();
-		void PostInitialize();
+		void BindEnemiesAndTarget();
 
 		void Update(const float& deltaTime);
 		void Render() const;

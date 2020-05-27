@@ -15,14 +15,24 @@ HiveMind::BlockColliderComponent::~BlockColliderComponent()
 {
 }
 
-bool HiveMind::BlockColliderComponent::IsColliding(const FPoint2& point)
+bool HiveMind::BlockColliderComponent::IsCollidingVertically(const FPoint2& point)
 {
 	if (m_pGameObject->HasComponent<SpriteComponent>())
 		m_CollisionArea = m_pGameObject->GetComponent<SpriteComponent>()->GetDest();
-	if (point.x >= m_CollisionArea.x && point.x <= (m_CollisionArea.x + m_CollisionArea.w) && point.y >= m_CollisionArea.y && point.y <= (m_CollisionArea.y + m_CollisionArea.h))
+	if (point.x >= m_CollisionArea.x && point.x <= (m_CollisionArea.x + m_CollisionArea.w) && point.y >= m_CollisionArea.y && point.y <= m_CollisionArea.y + 4)
 		return true;
 	return false;
 }
+
+bool HiveMind::BlockColliderComponent::IsCollidingHorizontally(const FPoint2& point)
+{
+	if (m_pGameObject->HasComponent<SpriteComponent>())
+		m_CollisionArea = m_pGameObject->GetComponent<SpriteComponent>()->GetDest();
+	if (point.x >= m_CollisionArea.x && point.x <= (m_CollisionArea.x + m_CollisionArea.w) && point.y >= m_CollisionArea.y && point.y <= m_CollisionArea.y + m_CollisionArea.w)
+		return true;
+	return false;
+}
+
 
 void HiveMind::BlockColliderComponent::RayHitObstacle(const GameObject* objectsToCheck, const FPoint2& objPos)
 {

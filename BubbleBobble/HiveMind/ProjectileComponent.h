@@ -6,7 +6,10 @@ namespace HiveMind
 	class ProjectileComponent : public BaseComponent
 	{
 	public:
-		ProjectileComponent(const bool isLookingLeft, const FPoint3& pos, const FVector2& velocity);
+		enum ProjectileState {
+			BUBBLE, FIREBALL
+		};
+		ProjectileComponent(const bool isLookingLeft, const FPoint3& pos, const FVector2& velocity, ProjectileState kindOfProjectile = BUBBLE);
 		virtual ~ProjectileComponent();
 		ProjectileComponent(const ProjectileComponent& other) = delete;
 		ProjectileComponent(ProjectileComponent&& other) = delete;
@@ -26,6 +29,7 @@ namespace HiveMind
 		FPoint3 m_Pos;
 		int m_FrameX;
 		int m_FrameY;
+		ProjectileState m_ProjState;
 	};
 }
 

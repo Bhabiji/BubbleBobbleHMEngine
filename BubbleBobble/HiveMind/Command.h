@@ -21,47 +21,41 @@ namespace HiveMind
 		}
 	};
 
-	class LeftCommand final :public Command
+	class LeftCommand final : public Command
 	{
 	public:
 		virtual void Execute(ActorComponent* pActorComp) override
 		{
 			std::cout << "Left" << std::endl;
-			if (pActorComp->GetActorState() != ActorComponent::ActorState::JUMPWHILERUNNING)
-				pActorComp->MoveLeft();
+			pActorComp->MoveLeft();
 			
 		};
 	};
 
-	class RightCommand final :public Command
+	class RightCommand final : public Command
 	{
 	public:
 		virtual void Execute(ActorComponent* pActorComp) override
 		{
 			std::cout << "Right" << std::endl;
-			if (pActorComp->GetActorState() != ActorComponent::ActorState::JUMPWHILERUNNING)
 				pActorComp->MoveRight();
 			
 		};
 	};
 
-	class JumpCommand final :public Command
+	class JumpCommand final : public Command
 	{
 	public:
 		virtual void Execute(ActorComponent* pActorComp) override
 		{
 			std::cout << "Jump" << std::endl;
-			if(pActorComp->GetActorState() == ActorComponent::ActorState::IDLE)
-				pActorComp->Jump();
-			else if (pActorComp->GetActorState() == ActorComponent::ActorState::LEFT)
-				pActorComp->JumpWhileRunning(true);
-			else if (pActorComp->GetActorState() == ActorComponent::ActorState::RIGHT)
-				pActorComp->JumpWhileRunning(false);
+			pActorComp->Jump();
+
 
 		};
 	};
 
-	class IdleCommand final :public Command
+	class IdleCommand final : public Command
 	{
 	public:
 		virtual void Execute(ActorComponent* pActorComp) override
@@ -76,12 +70,8 @@ namespace HiveMind
 		virtual void Execute(ActorComponent* pActorComp) override
 		{
 			std::cout << "Shooting" << std::endl;
-			if (pActorComp->GetActorState() == ActorComponent::ActorState::IDLE)
 				pActorComp->Shoot();
-			else if (pActorComp->GetActorState() == ActorComponent::ActorState::LEFT)
-				pActorComp->ShootWhileRunning(true);
-			else if (pActorComp->GetActorState() == ActorComponent::ActorState::RIGHT)
-				pActorComp->ShootWhileRunning(false);
+
 		}
 	};
 

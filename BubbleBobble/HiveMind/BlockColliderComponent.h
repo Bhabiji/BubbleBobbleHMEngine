@@ -11,7 +11,10 @@ namespace HiveMind
 		BlockColliderComponent();
 		BlockColliderComponent(const FPoint2& pos, const RectI& collisionArea);
 		virtual ~BlockColliderComponent();
-		virtual bool IsColliding(const FPoint2& point);
+		virtual bool IsCollidingVertically(const FPoint2& point);
+		virtual bool IsCollidingHorizontally(const FPoint2& point);
+
+
 		virtual void RayHitObstacle(const GameObject* objectsToCheck, const FPoint2& objPos);
 
 	protected:

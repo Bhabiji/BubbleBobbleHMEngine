@@ -3,12 +3,13 @@
 #include "Components.h"
 #include "SceneManager.h"
 #include "Scene.h"
-HiveMind::ProjectileComponent::ProjectileComponent(const bool isLookingLeft, const FPoint3& pos, const FVector2& velocity)
+HiveMind::ProjectileComponent::ProjectileComponent(const bool isLookingLeft, const FPoint3& pos, const FVector2& velocity, ProjectileState kindOfProjectile)
 	:m_LookingLeft{isLookingLeft}
 	,m_Velocity{velocity}
 	, m_FrameX{}
 	, m_FrameY{}
 	,m_Pos{pos}
+	,m_ProjState{kindOfProjectile}
 {
 	
 }
@@ -55,12 +56,26 @@ void HiveMind::ProjectileComponent::UpdateCollision(const float& elapsedSec)
 	auto scene = SceneManager::GetInstance().GetActiveScene();
 	for (auto& object : scene->GetObjects())
 	{
-		if (object->HasComponent<NPCComponent>())
+		if(m_ProjState == ProjectileState::BUBBLE)
 		{
-			if (HiveMind::IsOverlapping(GetGameObject()->GetTransform()->GetPosition(), object->GetComponent<SpriteComponent>()->GetDest()) && object->GetComponent<NPCComponent>()->GetActorState() != ActorComponent::ActorState::DEATH)
+			if (object->HasComponent<ActorComponent>() && object->GetComponent<ActorComponent>()->IsNPC() && object->HasComponent<HealthComponent>())
 			{
-				object->GetComponent<NPCComponent>()->Death();
-				GetGameObject()->GetComponent<LifeTimeComponent>()->ToggleActive(false);
+				if (HiveMind::IsOverlapping(GetGameObject()->GetTransform()->GetPosition(), object->GetComponent<SpriteComponent>()->GetDest()) && object->GetComponent<ActorComponent>()->GetActorState() != ActorComponent::ActorState::DEATH)
+				{
+					object->GetComponent<HealthComponent>()->DecreaseHealth(1);
+					GetGameObject()->SetActive(false);
+				}
+			}
+		}
+		else if (m_ProjState == ProjectileState::FIREBALL)
+		{
+			if (object->HasComponent<ActorComponent>() && !object->GetComponent<ActorComponent>()->IsNPC() && object->HasComponent<HealthComponent>())
+			{
+				if (HiveMind::IsOverlapping(GetGameObject()->GetTransform()->GetPosition(), object->GetComponent<SpriteComponent>()->GetDest()) && object->GetComponent<ActorComponent>()->GetActorState() != ActorComponent::ActorState::DEATH)
+				{
+					object->GetComponent<HealthComponent>()->DecreaseHealth(1);
+					GetGameObject()->SetActive(false);
+				}
 			}
 		}
 			

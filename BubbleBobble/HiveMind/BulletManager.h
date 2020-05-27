@@ -10,7 +10,8 @@ namespace HiveMind
 	public:
 		BulletManager();
 		~BulletManager();
-		void CreateBullet(const FPoint3& Pos, const FPoint2& velocity, float lifeTime, bool lookingLeft);
+		void CreateBubbleBullet(const FPoint3& pos, const FPoint2& velocity, float lifeTime, bool lookingLeft);
+		void CreateFireBall(const FPoint3& pos, const FPoint2& velocity, float lifeTime, bool lookingLeft);
 
 	private:
 	};

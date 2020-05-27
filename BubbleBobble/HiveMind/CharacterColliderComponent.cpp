@@ -30,7 +30,7 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 	if (!other->HasComponent<BlockColliderComponent>())
 		return;
 	BlockColliderComponent* temp{ other->GetComponent<BlockColliderComponent>() };
-	if (temp->IsColliding(rayEnd))
+	if (temp->IsCollidingHorizontally(rayEnd))
 		m_ColliderBox.left = true;
 
 	///////////////////////
@@ -40,7 +40,7 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 
 	rayDir= FVector2((m_CollisionArea.w / 2.f + 1),0 );
 	rayEnd = rayOrigin + rayDir;
-	if (temp->IsColliding(rayEnd))
+	if (temp->IsCollidingHorizontally(rayEnd))
 		m_ColliderBox.right = true;
 	///////////////////
 	g_Right = Line{ int(rayOrigin.x), int(rayOrigin.y), int(rayEnd.x), int(rayEnd.y) };
@@ -51,7 +51,7 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 	rayOrigin = FPoint2{ m_CollisionArea.x + m_CollisionArea.w / 2.f,m_CollisionArea.y + m_CollisionArea.h-1 }; // need to cover move collision area
 	rayDir = FVector2( 0, -(4));
 	rayEnd = rayOrigin + rayDir;
-	if (temp->IsColliding(rayEnd))
+	if (temp->IsCollidingVertically(rayEnd))
 		m_ColliderBox.top = true;
 	g_Up = Line{ int(rayOrigin.x), int(rayOrigin.y), int(rayEnd.x), int(rayEnd.y) };
 
@@ -62,25 +62,18 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 
 
 	//REVISE THIS SPAGHETTI
-	if (temp->IsColliding(rayEnd))
+	if (temp->IsCollidingVertically(rayEnd))
 	{
 		m_ColliderBox.bottom = true;
 		if (!m_ColliderBox.top) //if theres no block colliding above then that means char wont be bugged in block
 		{
 
-			if (GetGameObject()->HasComponent<PlayerControlComponent>())
+			if (GetGameObject()->HasComponent<ActorComponent>())
 			{
-				if (GetGameObject()->GetComponent<PlayerControlComponent>()->GetVelocity().y > 1)
-				{
-					m_pGameObject->GetTransform()->SetPosition(objPos.x, temp->GetTransform()->GetPosition().y - 32, 0);
-				}
+				
+				m_pGameObject->GetTransform()->SetPosition(objPos.x, temp->GetTransform()->GetPosition().y - 32, 0);
+				
 			}
-		}
-		if (GetGameObject()->HasComponent<NPCComponent>())
-		{
-		
-			m_pGameObject->GetTransform()->SetPosition(objPos.x, temp->GetTransform()->GetPosition().y - 32, 0);
-			
 		}
 	}
 
@@ -96,7 +89,7 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 	 rayEnd = FPoint2{ rayOrigin + rayDir };
 	if (!other->HasComponent<BlockColliderComponent>())
 		return;
-	if (temp->IsColliding(rayEnd))
+	if (temp->IsCollidingHorizontally(rayEnd))
 		m_ColliderBox.leftFoot = true;
 	///////////////////////
 	g_LeftFoot = Line{ int(rayOrigin.x), int(rayOrigin.y), int(rayEnd.x), int(rayEnd.y) };
@@ -108,17 +101,23 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 	 rayEnd = FPoint2{ rayOrigin + rayDir };
 	if (!other->HasComponent<BlockColliderComponent>())
 		return;
-	if (temp->IsColliding(rayEnd))
+	if (temp->IsCollidingHorizontally(rayEnd))
 		m_ColliderBox.rightFoot = true;
 	///////////////////////
 	g_RightFoot = Line{ int(rayOrigin.x), int(rayOrigin.y), int(rayEnd.x), int(rayEnd.y) };
 
 }
 
-bool HiveMind::CharacterColliderComponent::IsColliding(const FPoint2& Point)
+bool HiveMind::CharacterColliderComponent::IsCollidingVertically(const FPoint2& Point)
 {
 	return false;
 }
+
+bool HiveMind::CharacterColliderComponent::IsCollidingHorizontally(const FPoint2& Point)
+{
+	return false;
+}
+
 
 ColliderBox HiveMind::CharacterColliderComponent::GetCollisionResults() const
 {

@@ -27,8 +27,8 @@ void HiveMind::PickupComponent::Update(const float& elapsedSec)
 		{
 			if (player->HasComponent<ScoreCounterComponent>())
 			{
-				player->GetComponent<ScoreCounterComponent>()->AddScore(m_Points);
-				GetGameObject()->GetComponent<LifeTimeComponent>()->ToggleActive(false);
+				player->GetComponent<ScoreCounterComponent>()->AddToCounter(m_Points);
+				GetGameObject()->SetActive(false);
 			}
 		}
 

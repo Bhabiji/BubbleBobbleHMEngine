@@ -18,7 +18,7 @@ bool HiveMind::IsOverlapping(const HiveMind::RectI& area, const HiveMind::RectI&
 	}
 
 	// If one rectangle is under the other
-	if (area.y > (otherArea.y + otherArea.h) || otherArea.x > (area.x + area.h))
+	if (area.y > (otherArea.y + otherArea.h) || otherArea.y > (area.y + area.h))
 	{
 		return false;
 	}

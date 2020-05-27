@@ -7,6 +7,7 @@
 
 HiveMind::GameObject::GameObject()
 	:m_pTransform{new TransformComponent()}
+	, m_IsActive{ true }
 {
 	AddComponent(m_pTransform);
 }
@@ -77,7 +78,7 @@ void HiveMind::GameObject::CreateLevelBlockNoCollision(const int& blockData, FPo
 	GetTransform()->SetPosition(dstPos);
 }
 
-
+//------------PROJECTILES-----------
 void HiveMind::GameObject::CreateBlob(const bool isLookingLeft, const FPoint3& pos, const FPoint2& velocity, const float lifeTime)
 {
 	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/BulletSprite.png","Bullets", SpriteConfig{ 8, 1 }, true) };
@@ -96,6 +97,37 @@ void HiveMind::GameObject::CreateBlob(const bool isLookingLeft, const FPoint3& p
 
 }
 
+void HiveMind::GameObject::CreateFireBall(const bool isLookingLeft, const FPoint3& pos, const FPoint2& velocity, const float lifeTime)
+{
+	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/FireBallSprite.png","FireBall", SpriteConfig{ 4, 2 }, true) };
+	ProjectileComponent* pProjectileComp{ new ProjectileComponent(isLookingLeft,pos,velocity, ProjectileComponent::ProjectileState::FIREBALL) };
+	LifeTimeComponent* pMortalComp{ new LifeTimeComponent(lifeTime, true) };
+	GetTransform()->SetPosition(pos);
+	pSpriteComponent->SetCroppingDimensions();
+	FPoint2 srcPos{ 0, 0 };
+	if (isLookingLeft)
+	{
+		pSpriteComponent->SetRow(1);
+	}
+
+	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
+	CharacterColliderComponent* pCollider{ new CharacterColliderComponent(pos, pSpriteComponent->GetDest())};
+	AddComponent(pSpriteComponent);
+	AddComponent(pProjectileComp);
+	AddComponent(pMortalComp);
+	GetTransform()->SetPosition(pos);
+}
+//END
+bool HiveMind::GameObject::IsActive() const
+{
+	return m_IsActive;
+}
+
+bool HiveMind::GameObject::SetActive(const bool active)
+{
+	return m_IsActive = active;
+}
+
 void HiveMind::GameObject::CreatePlayer(const SpriteConfig& spriteConfig)
 {
 	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/CharacterSprites.png", "Characters", spriteConfig, false) };
@@ -104,13 +136,16 @@ void HiveMind::GameObject::CreatePlayer(const SpriteConfig& spriteConfig)
 	FPoint3 pos{ GetTransform()->GetPosition() };
 	GetTransform()->SetPosition(pos);
 	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
-	ActorComponent* pActorComponent{ new PlayerControlComponent() };
-
+	ActorComponent* pActorComponent{ new ActorComponent(true,false,false) };
+	HealthComponent* pHealthComponent{ new HealthComponent(3) };
 	ScoreCounterComponent* pScoreCounterComp{ new ScoreCounterComponent(ResourceManager::GetInstance().LoadFont("pixelated.ttf",30),0,FPoint2{40,2}) };
-	LifeCounterComponent* pLifeCounterComp{ new LifeCounterComponent(ResourceManager::GetInstance().LoadFont("pixelated.ttf",30),3,FPoint2{224,2}) };
-
+	HealthCounterComponent* pHealthCounterComp{ new HealthCounterComponent(ResourceManager::GetInstance().LoadFont("pixelated.ttf",30),pHealthComponent->GetHealth(),FPoint2{250,2}) };
+	ControllerComponent* pControllerComp{ new ControllerComponent() };
 	AddComponent(pScoreCounterComp);
-	AddComponent(pLifeCounterComp);
+	AddComponent(pHealthCounterComp);
+	AddComponent(pHealthComponent);
+	AddComponent(pControllerComp);
+
 
 	AddComponent(pActorComponent);
 
@@ -127,11 +162,12 @@ void HiveMind::GameObject::CreateMaita()
 	FPoint2 srcPos{ 0,0 };
 	FPoint3 pos{ GetTransform()->GetPosition() };
 	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
-	NPCComponent* pActorComponent{ new NPCComponent() };
-	LifeTimeComponent* pMortalComp{ new LifeTimeComponent(0.f, false) };
+	ActorComponent* pActorComponent{ new ActorComponent(false,true,false) }; // ask why not NPC component
+	HealthComponent* pHealthComponent{ new HealthComponent() };
+
+	AddComponent(pHealthComponent);
 	AddComponent(pActorComponent);
 	AddComponent(pSpriteComponent);
-	AddComponent(pMortalComp);
 	AddComponent(new CharacterColliderComponent());
 	pSpriteComponent->RescaleSprite(Float2(2, 2));
 	SetPosition(FPoint2(120, 170));
@@ -146,11 +182,12 @@ void HiveMind::GameObject::CreateMaita(FPoint3& pos)
 	FPoint3 dstPos{ pSpriteComponent->GetCroppedWidth() * pos.x, pSpriteComponent->GetCroppedHeight() * pos.y,0 };
 	GetTransform()->SetPosition(pos);
 	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
-	NPCComponent* pActorComponent{ new NPCComponent() };
-	LifeTimeComponent* pMortalComp{ new LifeTimeComponent(0.f, false) };
+	ActorComponent* pActorComponent{ new ActorComponent(false,true,false) };
+	HealthComponent* pHealthComponent{ new HealthComponent() };
+
+	AddComponent(pHealthComponent);
 	AddComponent(pActorComponent);
 	AddComponent(pSpriteComponent);
-	AddComponent(pMortalComp);
 	AddComponent(new CharacterColliderComponent());
 	pSpriteComponent->RescaleSprite(Float2(2, 2));
 	SetPosition(dstPos);
@@ -192,6 +229,7 @@ void HiveMind::GameObject::CreateScorePickup(const int& whichPickup, const FPoin
 	AddComponent(pMortalComp);
 	AddComponent(pPickupComponent);
 }
+
 
 void HiveMind::GameObject::SetTexture(const std::string& fileName, const std::string& texName)
 {

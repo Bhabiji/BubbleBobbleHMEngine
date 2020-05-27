@@ -31,17 +31,17 @@
     <Filter Include="Components\RenderingComponents">
       <UniqueIdentifier>{29fdd614-0e88-4f2b-b9c4-8731cfcb262f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\PhysicsComponent">
-      <UniqueIdentifier>{cbf354be-18a6-441c-b6b2-0b319171616b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\PhysicsComponent\ColliderComponents">
-      <UniqueIdentifier>{d957b9fd-830d-40c6-aeb3-2c7942664761}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Actors">
       <UniqueIdentifier>{dc15bc8f-ff83-404a-97ac-16c546b7b71e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Components\CounterComponents">
       <UniqueIdentifier>{71234707-99ab-4201-8249-037e7810ab83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\PhysicsRelatedComponent">
+      <UniqueIdentifier>{cbf354be-18a6-441c-b6b2-0b319171616b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\PhysicsRelatedComponent\ColliderComponents">
+      <UniqueIdentifier>{d957b9fd-830d-40c6-aeb3-2c7942664761}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -72,9 +72,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
     <ClCompile Include="LevelManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
@@ -88,13 +85,13 @@
       <Filter>Help</Filter>
     </ClCompile>
     <ClCompile Include="BlockColliderComponent.cpp">
-      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+      <Filter>Components\PhysicsRelatedComponent\ColliderComponents</Filter>
     </ClCompile>
     <ClCompile Include="CharacterColliderComponent.cpp">
-      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+      <Filter>Components\PhysicsRelatedComponent\ColliderComponents</Filter>
     </ClCompile>
     <ClCompile Include="ColliderComponent.cpp">
-      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+      <Filter>Components\PhysicsRelatedComponent\ColliderComponents</Filter>
     </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
       <Filter>Components\RenderingComponents</Filter>
@@ -112,18 +109,9 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="ProjectileComponent.cpp">
-      <Filter>Components\PhysicsComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="ControllerComponent.cpp">
-      <Filter>Components\PhysicsComponent</Filter>
+      <Filter>Components\PhysicsRelatedComponent</Filter>
     </ClCompile>
     <ClCompile Include="ActorComponent.cpp">
-      <Filter>Components\Actors</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerControlComponent.cpp">
-      <Filter>Components\Actors</Filter>
-    </ClCompile>
-    <ClCompile Include="NPCComponent.cpp">
       <Filter>Components\Actors</Filter>
     </ClCompile>
     <ClCompile Include="LifeTimeComponent.cpp">
@@ -144,8 +132,17 @@
     <ClCompile Include="ScoreCounterComponent.cpp">
       <Filter>Components\CounterComponents</Filter>
     </ClCompile>
-    <ClCompile Include="LifeCounterComponent.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="HealthCounterComponent.cpp">
+      <Filter>Components\CounterComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>Components\PhysicsRelatedComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerComponent.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,9 +206,6 @@
     <ClInclude Include="LevelManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Help</Filter>
     </ClInclude>
@@ -219,13 +213,13 @@
       <Filter>Help</Filter>
     </ClInclude>
     <ClInclude Include="BlockColliderComponent.h">
-      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+      <Filter>Components\PhysicsRelatedComponent\ColliderComponents</Filter>
     </ClInclude>
     <ClInclude Include="CharacterColliderComponent.h">
-      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+      <Filter>Components\PhysicsRelatedComponent\ColliderComponents</Filter>
     </ClInclude>
     <ClInclude Include="ColliderComponent.h">
-      <Filter>Components\PhysicsComponent\ColliderComponents</Filter>
+      <Filter>Components\PhysicsRelatedComponent\ColliderComponents</Filter>
     </ClInclude>
     <ClInclude Include="RenderComponent.h">
       <Filter>Components\RenderingComponents</Filter>
@@ -248,22 +242,10 @@
     <ClInclude Include="BulletManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="ProjectileComponent.h">
-      <Filter>Components\PhysicsComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="ControllerComponent.h">
-      <Filter>Components\PhysicsComponent</Filter>
+      <Filter>Components\PhysicsRelatedComponent</Filter>
     </ClInclude>
     <ClInclude Include="ActorComponent.h">
-      <Filter>Components\Actors</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerControlComponent.h">
-      <Filter>Components\Actors</Filter>
-    </ClInclude>
-    <ClInclude Include="NPCComponent.h">
       <Filter>Components\Actors</Filter>
     </ClInclude>
     <ClInclude Include="LifeTimeComponent.h">
@@ -281,8 +263,20 @@
     <ClInclude Include="ScoreCounterComponent.h">
       <Filter>Components\CounterComponents</Filter>
     </ClInclude>
-    <ClInclude Include="LifeCounterComponent.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="HealthCounterComponent.h">
+      <Filter>Components\CounterComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>Components\PhysicsRelatedComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Components\PhysicsRelatedComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerComponent.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

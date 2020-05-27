@@ -1,17 +1,17 @@
-﻿  NPCComponent.cpp
-C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\HiveMind\NPCComponent.cpp(125,7): warning C4189: 'rowAmount': local variable is initialized but not referenced
-  HiveMind.vcxproj -> C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\bin\Debug-x64\HiveMind\HiveMind.dll
-  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\bin\Debug-x64\HiveMind\HiveMind.dll
+﻿  ControllerComponent.cpp
+C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\HiveMind\ControllerComponent.cpp(15,57): warning C4100: 'elapsedSec': unreferenced formal parameter
+  HiveMind.vcxproj -> C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\bin\Debug-x64\HiveMind\HiveMind.dll
+  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\bin\Debug-x64\HiveMind\HiveMind.dll
   1 File(s) copied
-  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\3rdParty\SDL2\lib\x64\SDL2.dll
+  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\3rdParty\SDL2\lib\x64\SDL2.dll
   1 File(s) copied
-  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\3rdParty\SDL2_image\lib\x64\libjpeg-9.dll
-  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\3rdParty\SDL2_image\lib\x64\libpng16-16.dll
-  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\3rdParty\SDL2_image\lib\x64\libtiff-5.dll
-  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\3rdParty\SDL2_image\lib\x64\libwebp-7.dll
-  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\3rdParty\SDL2_image\lib\x64\SDL2_image.dll
-  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\3rdParty\SDL2_image\lib\x64\zlib1.dll
+  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\3rdParty\SDL2_image\lib\x64\libjpeg-9.dll
+  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\3rdParty\SDL2_image\lib\x64\libpng16-16.dll
+  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\3rdParty\SDL2_image\lib\x64\libtiff-5.dll
+  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\3rdParty\SDL2_image\lib\x64\libwebp-7.dll
+  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\3rdParty\SDL2_image\lib\x64\SDL2_image.dll
+  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\3rdParty\SDL2_image\lib\x64\zlib1.dll
   6 File(s) copied
-  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\3rdParty\SDL2_ttf\lib\x64\libfreetype-6.dll
-  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\ExamGood\GameObject_Final\BubbleBobble\3rdParty\SDL2_ttf\lib\x64\SDL2_ttf.dll
+  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\3rdParty\SDL2_ttf\lib\x64\libfreetype-6.dll
+  C:\Users\caere\Documents\School_DAE\Jaar_2\Semester_4\Programming_4\Exam\BubbleBobbleHMEngine\BubbleBobble\3rdParty\SDL2_ttf\lib\x64\SDL2_ttf.dll
   2 File(s) copied
