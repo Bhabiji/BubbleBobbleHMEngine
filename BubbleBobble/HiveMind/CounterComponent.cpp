@@ -10,6 +10,7 @@ HiveMind::CounterComponent::CounterComponent(Font* pFont, const int& initCount, 
 	:TextComponent(std::to_string(initCount),pFont)
 	, m_InitCount{ initCount }
 {
+	(posOffset);
 }
 HiveMind::CounterComponent::CounterComponent(Font* pFont, const int& initCount, const bool enableStaticPos, const FPoint2& staticPos)
 	:TextComponent(std::to_string(initCount),pFont,enableStaticPos,staticPos)

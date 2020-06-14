@@ -136,7 +136,6 @@ void HiveMind::ActorComponent::UpdateMovement(const float& elapsedSec)
 		m_Counter = 0.2f;
 	}
 
-	float yGlidingTrigger{ 200 };
 
 	if (collider.left && m_FaceLeft)
 	{
@@ -167,7 +166,6 @@ void HiveMind::ActorComponent::UpdateAnimation(const float& elapsedSec)
 	if (m_AnimTime >= 0.2f)
 	{
 		int colAmount{ tempComp->GetSpriteConfig().columns };
-		int rowAmount{ tempComp->GetSpriteConfig().rows };
 
 		++m_ClipX;
 		if (m_ClipX >= colAmount)
@@ -260,12 +258,6 @@ void HiveMind::ActorComponent::HandleNPCDeath(const float& elapsedSec)
 	
 
 	SpriteComponent* tempComp = GetGameObject()->GetComponent<SpriteComponent>();
-	if (m_AnimTime >= 0.2f)
-	{
-		int colAmount{ tempComp->GetSpriteConfig().columns };
-		int rowAmount{ tempComp->GetSpriteConfig().rows };
-	
-	}
 	FPoint2 pos{ GetTransform()->GetPosition() };
 
 	FPoint2 srcPos{ (tempComp->GetCroppedWidth() * m_ClipX),tempComp->GetCroppedHeight() * m_ClipY };
@@ -335,7 +327,6 @@ void HiveMind::ActorComponent::HandlePlayerDeath(const float& elapsedSec)
 
 void HiveMind::ActorComponent::MoveLeft()
 {
-	const ColliderBox& collider = GetGameObject()->GetComponent<CharacterColliderComponent>()->GetCollisionResults();
 	
 	m_ActorState = ActorState::LEFT;
 	m_FaceLeft = true;

@@ -12,8 +12,9 @@ void HiveMind::PhysicsComponent::Initialize()
 {
 }
 
-void HiveMind::PhysicsComponent::Update(const float& deltaTime)
+void HiveMind::PhysicsComponent::Update(const float& elapsedSec)
 {
+	(elapsedSec);
 
 }
 

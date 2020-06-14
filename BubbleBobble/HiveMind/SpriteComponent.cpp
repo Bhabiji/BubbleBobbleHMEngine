@@ -89,8 +89,8 @@ void HiveMind::SpriteComponent::Initialize()
 void HiveMind::SpriteComponent::Update(const float& elapsedSec)
 {
 	auto pos = GetGameObject()->GetTransform()->GetPosition();
-	m_DestRect.x = pos.x;
-	m_DestRect.y = pos.y;
+	m_DestRect.x = int(pos.x);
+	m_DestRect.y = int(pos.y);
 
 	if (m_IsAnimation)
 	{

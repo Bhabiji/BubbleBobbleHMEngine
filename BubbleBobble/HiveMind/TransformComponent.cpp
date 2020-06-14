@@ -21,8 +21,10 @@ HiveMind::FPoint3 HiveMind::TransformComponent::GetPosition() const
 	return m_Position;
 }
 
-void HiveMind::TransformComponent::Update(const float& deltaTime)
+void HiveMind::TransformComponent::Update(const float& elapsedSec)
 {
+	(elapsedSec);
+
 	if (GetGameObject()->HasComponent<SpriteComponent>())
 	{
 		SpriteComponent* pSpriteComponent = GetGameObject()->GetComponent<SpriteComponent>();

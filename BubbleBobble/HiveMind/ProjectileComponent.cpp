@@ -52,6 +52,8 @@ void HiveMind::ProjectileComponent::UpdateMovement(const float& elapsedSec)
 
 void HiveMind::ProjectileComponent::UpdateCollision(const float& elapsedSec)
 {
+	(elapsedSec);
+
 	GetTransform();
 	auto scene = SceneManager::GetInstance().GetActiveScene();
 	for (auto& object : scene->GetObjects())

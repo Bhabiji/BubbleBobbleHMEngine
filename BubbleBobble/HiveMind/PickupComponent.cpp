@@ -26,6 +26,8 @@ HiveMind::PickupComponent::~PickupComponent()
 //shouldve used observer pattern
 void HiveMind::PickupComponent::Update(const float& elapsedSec)
 {
+	(elapsedSec);
+
 	for (GameObject* player : m_pPlayers)
 	{
 		if (HiveMind::IsOverlapping(player->GetComponent<SpriteComponent>()->GetDest(), GetGameObject()->GetComponent<SpriteComponent>()->GetDest()))

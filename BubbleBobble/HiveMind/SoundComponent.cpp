@@ -18,6 +18,8 @@ HiveMind::SoundComponent::~SoundComponent()
 
 void HiveMind::SoundComponent::Update(const float& elapsedSec)
 {
+	(elapsedSec);
+
 }
 
 void HiveMind::SoundComponent::PlaySoundByName(const std::string& sound)

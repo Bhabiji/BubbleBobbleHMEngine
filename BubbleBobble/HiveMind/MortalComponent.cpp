@@ -16,6 +16,7 @@ HiveMind::MortalComponent::~MortalComponent()
 
 void HiveMind::MortalComponent::Update(const float& elapsedSec)
 {
+	(elapsedSec);
 	if (m_Lives <= 0)
 		GetGameObject()->GetComponent<ActorComponent>()->Death();
 }
