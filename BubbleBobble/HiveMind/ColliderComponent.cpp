@@ -4,14 +4,14 @@
 
 HiveMind::ColliderComponent::ColliderComponent()
 	:m_Pos{}
-	, m_CollisionArea{}
+	, m_Size{}
 {
 	
 }
 
-HiveMind::ColliderComponent::ColliderComponent(const FPoint2& pos, const RectI& collisionArea)
+HiveMind::ColliderComponent::ColliderComponent(const FPoint2& pos, const Float2& size)
 	:m_Pos{pos}
-	,m_CollisionArea{collisionArea}
+	,m_Size{size}
 {
 }
 

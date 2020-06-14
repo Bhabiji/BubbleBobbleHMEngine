@@ -57,7 +57,7 @@ namespace HiveMind
 	class ControllerComponent final : public BaseComponent
 	{
 	public:
-		ControllerComponent();
+		ControllerComponent(const bool useController);
 		virtual ~ControllerComponent();
 		bool ProcessInput();
 		bool IsPressed(const WORD& gamepadButton) const;
@@ -70,6 +70,7 @@ namespace HiveMind
 	
 
 	private:
+		const bool m_UseController;
 		std::vector<InputConfig> m_pCommandInput;
 		XINPUT_STATE m_ControllerState;
 

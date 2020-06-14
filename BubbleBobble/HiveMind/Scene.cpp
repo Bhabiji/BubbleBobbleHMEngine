@@ -47,10 +47,20 @@ void HiveMind::Scene::DeleteInactives()
 	{
 		if (!(*it)->IsActive())
 		{
+			//delete *it;
 			it = m_Objects.erase(it);
 		}
 		else
 			++it;
+	}
+}
+
+void HiveMind::Scene::Reset()
+{
+	for (GameObject* object : m_Objects)
+	{
+		delete object;
+		object = nullptr;
 	}
 }
 
@@ -61,7 +71,15 @@ std::vector<GameObject*> HiveMind::Scene::GetObjects() const
 
 Scene::Scene(const std::string& name) : m_Name(name) {}
 
-Scene::~Scene() = default;
+Scene::~Scene()
+{
+	for (GameObject* object : m_Objects)
+	{
+		delete object;
+		object = nullptr;
+	}
+	m_Objects.clear();
+};
 
 void Scene::Add(GameObject* object)
 {

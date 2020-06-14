@@ -9,7 +9,7 @@ namespace HiveMind
 	{
 	public:
 		BlockColliderComponent();
-		BlockColliderComponent(const FPoint2& pos, const RectI& collisionArea);
+		BlockColliderComponent(const FPoint2& pos, const Float2& size);
 		virtual ~BlockColliderComponent();
 		virtual bool IsCollidingVertically(const FPoint2& point);
 		virtual bool IsCollidingHorizontally(const FPoint2& point);
@@ -18,12 +18,13 @@ namespace HiveMind
 		virtual void RayHitObstacle(const GameObject* objectsToCheck, const FPoint2& objPos);
 
 	protected:
-		//virtual void Initialize() override;
+		virtual void Initialize() override;
 		virtual void Update(const float& deltaTime) override;
 		virtual void Render() const override;
 
 		//Pos of parented gameobject and it's collisionArea
 	private:
+		bool m_CustomSize;
 	};
 }
 

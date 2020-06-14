@@ -11,7 +11,7 @@ namespace HiveMind
 	{
 	public:
 		ColliderComponent();
-		ColliderComponent(const FPoint2& pos, const RectI& collisionArea);
+		ColliderComponent(const FPoint2& pos, const Float2& size);
 		virtual ~ColliderComponent();
 		virtual void RayHitObstacle(const GameObject* objectsToCheck, const FPoint2& objPos) = 0;
 		virtual bool IsCollidingHorizontally(const FPoint2& Point) = 0;
@@ -24,7 +24,7 @@ namespace HiveMind
 
 		//Pos of parented gameobject and it's collisionArea
 		FPoint2 m_Pos;
-		RectI m_CollisionArea;
+		FPoint2 m_Size;
 		Float2 m_Measures;
 	private:
 	};

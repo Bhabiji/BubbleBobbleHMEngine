@@ -11,8 +11,8 @@ HiveMind::CharacterColliderComponent::CharacterColliderComponent()
 {
 }
 
-HiveMind::CharacterColliderComponent::CharacterColliderComponent(const FPoint2& pos, const RectI& collisionArea)
-	:ColliderComponent(pos,collisionArea)
+HiveMind::CharacterColliderComponent::CharacterColliderComponent(const FPoint2& pos, const Float2& size)
+	:ColliderComponent(pos,size)
 {
 }
 
@@ -23,9 +23,11 @@ HiveMind::CharacterColliderComponent::~CharacterColliderComponent()
 void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* other, const FPoint2& objPos)
 {
 	//CHECK LEFT
-	m_CollisionArea = { m_pGameObject->GetComponent<SpriteComponent>()->GetDest() };
-	FPoint2 rayOrigin{ m_CollisionArea.x + m_CollisionArea.w / 2.f,m_CollisionArea.y + m_CollisionArea.h/ 2.f };
-	FVector2 rayDir{ -(m_CollisionArea.w / 2.f + 1),0 };
+	m_Size = { m_pGameObject->GetComponent<SpriteComponent>()->GetDest().w,  m_pGameObject->GetComponent<SpriteComponent>()->GetDest().h };
+	m_Pos = { m_pGameObject->GetComponent<SpriteComponent>()->GetDest().x,  m_pGameObject->GetComponent<SpriteComponent>()->GetDest().y };
+
+	FPoint2 rayOrigin{ m_Pos.x + m_Size.x / 2.f,m_Pos.y + m_Size.y/ 2.f };
+	FVector2 rayDir{ -(m_Size.x / 2.f + 1),0 };
 	FPoint2 rayEnd{ rayOrigin + rayDir };
 	if (!other->HasComponent<BlockColliderComponent>())
 		return;
@@ -38,7 +40,7 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 
 	//CHECK RIGHT
 
-	rayDir= FVector2((m_CollisionArea.w / 2.f + 1),0 );
+	rayDir= FVector2((m_Size.x / 2.f + 1),0 );
 	rayEnd = rayOrigin + rayDir;
 	if (temp->IsCollidingHorizontally(rayEnd))
 		m_ColliderBox.right = true;
@@ -48,7 +50,7 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 
 
 	////CHECK UP NOT NECESSARY (CAN JUMP THROUGH) But necessary tro fix jump
-	rayOrigin = FPoint2{ m_CollisionArea.x + m_CollisionArea.w / 2.f,m_CollisionArea.y + m_CollisionArea.h-1 }; // need to cover move collision area
+	rayOrigin = FPoint2{ m_Pos.x + m_Size.x / 2.f,m_Pos.y + m_Size.y-1 }; // need to cover move collision area
 	rayDir = FVector2( 0, -(4));
 	rayEnd = rayOrigin + rayDir;
 	if (temp->IsCollidingVertically(rayEnd))
@@ -56,8 +58,8 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 	g_Up = Line{ int(rayOrigin.x), int(rayOrigin.y), int(rayEnd.x), int(rayEnd.y) };
 
 	//CHECK BOTTOM
-	rayOrigin = FPoint2{ m_CollisionArea.x + m_CollisionArea.w / 2.f,m_CollisionArea.y + m_CollisionArea.h / 2.f };
-	rayDir= FVector2( 0,+(m_CollisionArea.h / 2.f + 1) );
+	rayOrigin = FPoint2{ m_Pos.x + m_Size.x / 2.f,m_Pos.y + m_Size.y / 2.f };
+	rayDir= FVector2( 0,+(m_Size.y / 2.f + 1) );
 	rayEnd = rayOrigin + rayDir;
 
 
@@ -83,9 +85,8 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 
 
 	//CHECK LEFTFOOT
-	m_CollisionArea = { m_pGameObject->GetComponent<SpriteComponent>()->GetDest() };
-	 rayOrigin = FPoint2{ m_CollisionArea.x  ,m_CollisionArea.y + m_CollisionArea.h / 2.f };
-	 rayDir = FVector2{ 0,(m_CollisionArea.h / 2.f + 1) };
+	 rayOrigin = FPoint2{ m_Pos.x  ,m_Pos.y + m_Size.y / 2.f };
+	 rayDir = FVector2{ 0,(m_Size.y / 2.f + 1) };
 	 rayEnd = FPoint2{ rayOrigin + rayDir };
 	if (!other->HasComponent<BlockColliderComponent>())
 		return;
@@ -95,9 +96,8 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 	g_LeftFoot = Line{ int(rayOrigin.x), int(rayOrigin.y), int(rayEnd.x), int(rayEnd.y) };
 
 	//CHECK RIGHTFOOT
-	m_CollisionArea = { m_pGameObject->GetComponent<SpriteComponent>()->GetDest() };
-	 rayOrigin = FPoint2{ m_CollisionArea.x + m_CollisionArea.w ,m_CollisionArea.y + m_CollisionArea.h / 2.f };
-	 rayDir = FVector2{ 0,(m_CollisionArea.h / 2.f + 1) };
+	 rayOrigin = FPoint2{ m_Pos.x + m_Size.x ,m_Pos.y + m_Size.x / 2.f };
+	 rayDir = FVector2{ 0,(m_Size.x / 2.f + 1) };
 	 rayEnd = FPoint2{ rayOrigin + rayDir };
 	if (!other->HasComponent<BlockColliderComponent>())
 		return;
@@ -133,10 +133,11 @@ void HiveMind::CharacterColliderComponent::ResetCollision()
 
 void HiveMind::CharacterColliderComponent::Update(const float& deltaTime)
 {
-	std::vector<GameObject*> levelData{ LevelManager::GetInstance().GetCurrentLevel() };
-	for (size_t i{ 0 }; i < levelData.size(); i++)
+	std::vector<GameObject*> pTemp = SceneManager::GetInstance().GetActiveScene()->GetObjects();
+	for (size_t i{ 0 }; i < pTemp.size(); i++)
 	{
-		RayHitObstacle(levelData[i], GetTransform()->GetPosition());
+		if(pTemp[i]->HasComponent<BlockColliderComponent>())
+			RayHitObstacle(pTemp[i], GetTransform()->GetPosition());
 	}
 }
 

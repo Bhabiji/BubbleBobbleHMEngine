@@ -5,8 +5,10 @@
 #include <iostream>
 #include "Math.h"
 #include "Animations.h"
+#include "ButtonComponent.h"
 namespace HiveMind
 {
+	class Font;
 	class PlayerControlComponent;
 	class TransformComponent;
 	class BaseComponent;
@@ -28,14 +30,27 @@ namespace HiveMind
 
 		//LEVEL
 		void CreateLevelBlock(const int& blockData, FPoint3& pos);
+		void CreateCollision(FPoint2& pos, Float2& size);
 		void CreateLevelBlockNoCollision(const int& blockData, FPoint3& pos);
+
+		//HUD
+		void CreateButton(const FPoint3& pos, const Int2& size, const std::string& text, const std::string& linkedScene, HiveMind::Font* pFont);
+		void CreateButton(const FPoint3& pos, const Int2& size, const std::string& text, const ButtonComponent::Action action, HiveMind::Font* pFont);
+		void CreateButton(const FPoint3& pos, const Int2& size, const std::string& text, const ButtonComponent::Action action, const std::string& linkedScene, HiveMind::Font* pFont);
+
+		//PROJECTILES
 		void CreateBlob(const bool isLookingLeft, const FPoint3& pos, const FPoint2& velocity, const float lifeTime);
+		void CreateFireBall(const bool isLookingLeft, const FPoint3& pos, const FPoint2& velocity, const float lifeTime);
+
+		//CHARACTERS
 		void CreatePlayer(const SpriteConfig& spriteConfig);
 		void CreateMaita();
 		void CreateMaita(FPoint3& pos);
+		void CreateZenChan(FPoint3& pos);
+		void CreateMaitaPlayer(FPoint3& pos);
+
 		void CreateScorePickup(const int& whichPickup, const FPoint3& pos, std::vector<GameObject*> pPlayerVec);
 		void CreateScorePickup(const int& whichPickup, const FPoint3& pos, GameObject* pPlayer);
-		void CreateFireBall(const bool isLookingLeft, const FPoint3& pos, const FPoint2& velocity, const float lifeTime);
 		bool IsActive() const;
 		bool SetActive(const bool active);
 

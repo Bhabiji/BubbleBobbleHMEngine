@@ -58,7 +58,7 @@ void HiveMind::ProjectileComponent::UpdateCollision(const float& elapsedSec)
 	{
 		if(m_ProjState == ProjectileState::BUBBLE)
 		{
-			if (object->HasComponent<ActorComponent>() && object->GetComponent<ActorComponent>()->IsNPC() && object->HasComponent<HealthComponent>())
+			if (object->HasComponent<ActorComponent>() && object->GetComponent<ActorComponent>()->IsEnemy() && object->HasComponent<HealthComponent>())
 			{
 				if (HiveMind::IsOverlapping(GetGameObject()->GetTransform()->GetPosition(), object->GetComponent<SpriteComponent>()->GetDest()) && object->GetComponent<ActorComponent>()->GetActorState() != ActorComponent::ActorState::DEATH)
 				{
@@ -69,11 +69,11 @@ void HiveMind::ProjectileComponent::UpdateCollision(const float& elapsedSec)
 		}
 		else if (m_ProjState == ProjectileState::FIREBALL)
 		{
-			if (object->HasComponent<ActorComponent>() && !object->GetComponent<ActorComponent>()->IsNPC() && object->HasComponent<HealthComponent>())
+			if (object->HasComponent<ActorComponent>() && !object->GetComponent<ActorComponent>()->IsEnemy() && object->HasComponent<HealthComponent>())
 			{
 				if (HiveMind::IsOverlapping(GetGameObject()->GetTransform()->GetPosition(), object->GetComponent<SpriteComponent>()->GetDest()) && object->GetComponent<ActorComponent>()->GetActorState() != ActorComponent::ActorState::DEATH)
 				{
-					object->GetComponent<HealthComponent>()->DecreaseHealth(1);
+					object->GetComponent<ActorComponent>()->Notify(Observer::Event::ISHIT);
 					GetGameObject()->SetActive(false);
 				}
 			}

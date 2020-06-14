@@ -4,7 +4,7 @@
 #include "Renderer.h"
 #include "Components.h"
 #include "RenderComponent.h"
-
+#include "SoundManager.h"
 HiveMind::GameObject::GameObject()
 	:m_pTransform{new TransformComponent()}
 	, m_IsActive{ true }
@@ -16,7 +16,11 @@ HiveMind::GameObject::~GameObject()
 {
 	for (BaseComponent* pComponent: m_pComponents)
 	{
+		if (pComponent)
+		{
 		delete pComponent;
+		pComponent = nullptr;
+		}
 	}
 	
 }
@@ -66,6 +70,13 @@ void HiveMind::GameObject::CreateLevelBlock(const int& blockData, FPoint3& pos)
 		GetTransform()->SetPosition(dstPos);
 }
 
+void HiveMind::GameObject::CreateCollision(FPoint2& pos, Float2& size)
+{
+	BlockColliderComponent* pColliderComp{ new BlockColliderComponent(pos,size) };
+	GetTransform()->SetPosition(FPoint3{ pos,0 });
+	AddComponent(pColliderComp);
+}
+
 void HiveMind::GameObject::CreateLevelBlockNoCollision(const int& blockData, FPoint3& pos)
 {
 	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/Blocks.png","Blocks", SpriteConfig{ 10, 10 }, false) };
@@ -76,6 +87,37 @@ void HiveMind::GameObject::CreateLevelBlockNoCollision(const int& blockData, FPo
 	AddComponent(pSpriteComponent);
 	pSpriteComponent->RescaleSprite(Float2(2.f, 2.f));
 	GetTransform()->SetPosition(dstPos);
+}
+
+void HiveMind::GameObject::CreateButton(const FPoint3& pos, const Int2& size, const std::string& text, const std::string& linkedScene, HiveMind::Font* pFont)
+{
+	GetTransform()->SetPosition(pos);
+	TextComponent* pTextComponent{new TextComponent(text,pFont)};
+	ButtonComponent* pButtonComponent{ new ButtonComponent(size, linkedScene) };
+	AddComponent(pTextComponent);
+	AddComponent(pButtonComponent);
+
+
+}
+
+void HiveMind::GameObject::CreateButton(const FPoint3& pos, const Int2& size, const std::string& text, const ButtonComponent::Action action, HiveMind::Font* pFont)
+{
+	GetTransform()->SetPosition(pos);
+	TextComponent* pTextComponent{ new TextComponent(text,pFont) };
+	ButtonComponent* pButtonComponent{ new ButtonComponent(size, action) };
+	AddComponent(pTextComponent);
+	AddComponent(pButtonComponent);
+
+
+}
+
+void HiveMind::GameObject::CreateButton(const FPoint3& pos, const Int2& size, const std::string& text, const ButtonComponent::Action action, const std::string& linkedScene, HiveMind::Font* pFont)
+{
+	GetTransform()->SetPosition(pos);
+	TextComponent* pTextComponent{ new TextComponent(text,pFont) };
+	ButtonComponent* pButtonComponent{ new ButtonComponent(size, action,linkedScene) };
+	AddComponent(pTextComponent);
+	AddComponent(pButtonComponent);
 }
 
 //------------PROJECTILES-----------
@@ -111,7 +153,7 @@ void HiveMind::GameObject::CreateFireBall(const bool isLookingLeft, const FPoint
 	}
 
 	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
-	CharacterColliderComponent* pCollider{ new CharacterColliderComponent(pos, pSpriteComponent->GetDest())};
+	CharacterColliderComponent* pCollider{ new CharacterColliderComponent(pos, Float2{pSpriteComponent->GetDest().w,pSpriteComponent->GetDest().h}) };
 	AddComponent(pSpriteComponent);
 	AddComponent(pProjectileComp);
 	AddComponent(pMortalComp);
@@ -133,14 +175,22 @@ void HiveMind::GameObject::CreatePlayer(const SpriteConfig& spriteConfig)
 	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/CharacterSprites.png", "Characters", spriteConfig, false) };
 	pSpriteComponent->SetCroppingDimensions();
 	FPoint2 srcPos{ 0,0 };
-	FPoint3 pos{ GetTransform()->GetPosition() };
+	FPoint3 pos{ 50,200,0 };
 	GetTransform()->SetPosition(pos);
 	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
-	ActorComponent* pActorComponent{ new ActorComponent(true,false,false) };
+	ActorComponent* pActorComponent{ new ActorComponent(true,false,false, 100) };
 	HealthComponent* pHealthComponent{ new HealthComponent(3) };
 	ScoreCounterComponent* pScoreCounterComp{ new ScoreCounterComponent(ResourceManager::GetInstance().LoadFont("pixelated.ttf",30),0,FPoint2{40,2}) };
 	HealthCounterComponent* pHealthCounterComp{ new HealthCounterComponent(ResourceManager::GetInstance().LoadFont("pixelated.ttf",30),pHealthComponent->GetHealth(),FPoint2{250,2}) };
-	ControllerComponent* pControllerComp{ new ControllerComponent() };
+	ControllerComponent* pControllerComp{ new ControllerComponent(true) };
+	SoundComponent* pSoundComp{ new SoundComponent() };
+
+	pActorComponent->AddObserver(new HealthObserver());
+	pActorComponent->AddObserver(new DeathObserver());
+
+	pSoundComp->AddSound("Shoot", "../Data/Shoot.wav", false);
+
+	AddComponent(pSoundComp);
 	AddComponent(pScoreCounterComp);
 	AddComponent(pHealthCounterComp);
 	AddComponent(pHealthComponent);
@@ -162,7 +212,7 @@ void HiveMind::GameObject::CreateMaita()
 	FPoint2 srcPos{ 0,0 };
 	FPoint3 pos{ GetTransform()->GetPosition() };
 	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
-	ActorComponent* pActorComponent{ new ActorComponent(false,true,false) }; // ask why not NPC component
+	ActorComponent* pActorComponent{ new ActorComponent(false,true,false,50) }; // ask why not NPC component
 	HealthComponent* pHealthComponent{ new HealthComponent() };
 
 	AddComponent(pHealthComponent);
@@ -173,6 +223,9 @@ void HiveMind::GameObject::CreateMaita()
 	SetPosition(FPoint2(120, 170));
 }
 
+
+
+
 void HiveMind::GameObject::CreateMaita(FPoint3& pos)
 {
 	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/Maita.png", "Maita", SpriteConfig{8,5}, false) };
@@ -182,7 +235,7 @@ void HiveMind::GameObject::CreateMaita(FPoint3& pos)
 	FPoint3 dstPos{ pSpriteComponent->GetCroppedWidth() * pos.x, pSpriteComponent->GetCroppedHeight() * pos.y,0 };
 	GetTransform()->SetPosition(pos);
 	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
-	ActorComponent* pActorComponent{ new ActorComponent(false,true,false) };
+	ActorComponent* pActorComponent{ new ActorComponent(false,true,false,50) };
 	HealthComponent* pHealthComponent{ new HealthComponent() };
 
 	AddComponent(pHealthComponent);
@@ -194,19 +247,65 @@ void HiveMind::GameObject::CreateMaita(FPoint3& pos)
 
 }
 
+void HiveMind::GameObject::CreateZenChan(FPoint3& pos)
+{
+	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/ZenChan.png", "ZenChan", SpriteConfig{8,5}, false) };
+	FPoint2 srcPos{ 0,0 };
+	pos.y *= 2;
+	pSpriteComponent->SetCroppingDimensions();
+	FPoint3 dstPos{ pSpriteComponent->GetCroppedWidth() * pos.x, pSpriteComponent->GetCroppedHeight() * pos.y,0 };
+	GetTransform()->SetPosition(pos);
+	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
+	ActorComponent* pActorComponent{ new ActorComponent(false,false,true,50) };
+	HealthComponent* pHealthComponent{ new HealthComponent() };
+
+	AddComponent(pHealthComponent);
+	AddComponent(pActorComponent);
+	AddComponent(pSpriteComponent);
+	AddComponent(new CharacterColliderComponent());
+	pSpriteComponent->RescaleSprite(Float2(2, 2));
+	SetPosition(dstPos);
+}
+
+void HiveMind::GameObject::CreateMaitaPlayer(FPoint3& pos)
+{
+	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/Maita.png", "Maita", SpriteConfig{8,5}, false) };
+	FPoint2 srcPos{ 0,0 };
+	pos.y *= 2;
+	pSpriteComponent->SetCroppingDimensions();
+	FPoint3 dstPos{ pSpriteComponent->GetCroppedWidth() * pos.x, pSpriteComponent->GetCroppedHeight() * pos.y,0 };
+	GetTransform()->SetPosition(pos);
+	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
+	ActorComponent* pActorComponent{ new ActorComponent(true,true,false,100) };
+	HealthComponent* pHealthComponent{ new HealthComponent() };
+	ControllerComponent* pControllerComp{ new ControllerComponent(false) };
+
+	AddComponent(pHealthComponent);
+	AddComponent(pControllerComp);
+
+	AddComponent(pActorComponent);
+	AddComponent(pSpriteComponent);
+	AddComponent(new CharacterColliderComponent());
+	pSpriteComponent->RescaleSprite(Float2(2, 2));
+	SetPosition(dstPos);
+}
+
 
 
 void HiveMind::GameObject::CreateScorePickup(const int& whichPickup, const FPoint3& pos, std::vector<GameObject*> pPlayerVec)
 {
-	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/ScorePickups.png", "ScorePickups", SpriteConfig{3,1}, false) };
+	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/ScorePickups.png", "ScorePickups", SpriteConfig{2,1}, false) };
 	pSpriteComponent->SetCroppingDimensions();
 	FPoint2 srcPos{ pSpriteComponent->GetCroppedWidth() * whichPickup,0 };
-	PickupComponent* pPickupComponent{new PickupComponent(1000*whichPickup+1,pPlayerVec)};
+	PickupComponent* pPickupComponent{new PickupComponent(100*(whichPickup+1),pPlayerVec)};
 	LifeTimeComponent* pMortalComp{ new LifeTimeComponent(0.f, false) };
+	SoundComponent* pSoundComp{ new SoundComponent() };
+	pSoundComp->AddSound("Pickup", "../Data/Pickup.wav", false);
 
 	GetTransform()->SetPosition(pos);
 	pSpriteComponent->SetLocalSpriteArea(srcPos, GetTransform()->GetPosition());
 	pSpriteComponent->RescaleSprite(Float2{ 2,2 });
+	AddComponent(pSoundComp);
 	AddComponent(pSpriteComponent);
 	AddComponent(pMortalComp);
 	AddComponent(pPickupComponent);
@@ -215,16 +314,19 @@ void HiveMind::GameObject::CreateScorePickup(const int& whichPickup, const FPoin
 
 void HiveMind::GameObject::CreateScorePickup(const int& whichPickup, const FPoint3& pos, GameObject* pPlayer)
 {
-	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/ScorePickups.png", "ScorePickups", SpriteConfig{3,1}, false) };
+	SpriteComponent* pSpriteComponent{ new SpriteComponent("../Data/ScorePickups.png", "ScorePickups", SpriteConfig{2,1}, false) };
 	pSpriteComponent->SetCroppingDimensions();
 	FPoint2 srcPos{ pSpriteComponent->GetCroppedWidth() * whichPickup,0 };
-	PickupComponent* pPickupComponent{ new PickupComponent(1000 * (whichPickup + 1) , pPlayer) };
+	PickupComponent* pPickupComponent{ new PickupComponent(100 * (whichPickup + 1) , pPlayer) };
 	LifeTimeComponent* pMortalComp{ new LifeTimeComponent(0.f, false) };
+	SoundComponent* pSoundComp{ new SoundComponent() };
+	pSoundComp->AddSound("Pickup", "../Data/Pickup.wav", false);
 
 	GetTransform()->SetPosition(pos);
 	pSpriteComponent->SetLocalSpriteArea(srcPos, GetTransform()->GetPosition());
 	pSpriteComponent->RescaleSprite(Float2{ 2,2 });
 
+	AddComponent(pSoundComp);
 	AddComponent(pSpriteComponent);
 	AddComponent(pMortalComp);
 	AddComponent(pPickupComponent);

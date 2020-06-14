@@ -28,6 +28,7 @@ namespace HiveMind
 		void SetActive(const bool toggle);
 		void Remove(GameObject* gameObject);
 		void DeleteInactives();
+		void Reset();
 		std::vector<GameObject*> GetObjects() const;
 		explicit Scene(const std::string& name);
 	private: 

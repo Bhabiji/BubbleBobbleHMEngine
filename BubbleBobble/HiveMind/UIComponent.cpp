@@ -27,10 +27,10 @@ void HiveMind::UIComponent::Initialize()
 	m_pGameObject->GetComponent<TextComponent>()->SetText("0");
 }
 
-void HiveMind::UIComponent::Update(const float& deltaTime)
+void HiveMind::UIComponent::Update(const float& elapsedSec)
 {
 	
-	m_FPS = int(1000000 / deltaTime);
+	m_FPS = int(1000000 / elapsedSec);
 	m_pGameObject->GetComponent<TextComponent>()->SetText(std::to_string(m_FPS));
 
 }

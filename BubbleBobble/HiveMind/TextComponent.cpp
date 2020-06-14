@@ -20,6 +20,12 @@ HiveMind::TextComponent::TextComponent(const std::string& text, Font* font, cons
 {
 }
 
+HiveMind::TextComponent::~TextComponent()
+{
+	delete m_Font;
+	m_Font = nullptr;
+}
+
 void HiveMind::TextComponent::Initialize()
 {
 	m_IsInitialized = true;
@@ -38,9 +44,9 @@ void HiveMind::TextComponent::Initialize()
 	SetTextTexture(new Texture2D(texture));
 }
 
-void HiveMind::TextComponent::Update(const float& deltaTime)
+void HiveMind::TextComponent::Update(const float& elapsedSec)
 {
-	(deltaTime);
+	RenderComponent::Update(elapsedSec);
 	if (m_NeedsUpdate)
 	{
 		const SDL_Color color = { 255,255,255 }; // only white text is supported now
@@ -68,10 +74,4 @@ void HiveMind::TextComponent::SetText(const std::string& text)
 	m_Text = text;
 	m_NeedsUpdate = true;
 }
-
-void HiveMind::TextComponent::SetPosition(const float x, const float y)
-{
-	GetTransform()->SetPosition(x, y, 0.0f);
-}
-
 

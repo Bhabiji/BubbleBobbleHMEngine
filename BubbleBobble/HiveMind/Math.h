@@ -23,9 +23,13 @@ namespace HiveMind {
 	typedef glm::vec2 FPoint2;
 	typedef glm::vec2 Float2;
 
+	struct Int2 {
+		int x, y;
+	};
 
 	bool IsOverlapping(const FPoint2& objPos, const HiveMind::RectI& otherArea);
 	bool IsOverlapping(const HiveMind::RectI& area, const HiveMind::RectI& otherArea);
+	bool IsOverlapping(const Int2& objPos, const HiveMind::RectI& otherArea);
 
 	
 }

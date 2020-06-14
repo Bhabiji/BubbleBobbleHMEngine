@@ -17,8 +17,13 @@ HiveMind::PickupComponent::PickupComponent(const int& points, GameObject* pPlaye
 
 HiveMind::PickupComponent::~PickupComponent()
 {
+	/*for (size_t i{ 0 }; i < m_pPlayers.size(); i++)
+	{
+		delete m_pPlayers[i];
+	}*/
 }
 
+//shouldve used observer pattern
 void HiveMind::PickupComponent::Update(const float& elapsedSec)
 {
 	for (GameObject* player : m_pPlayers)
@@ -28,6 +33,10 @@ void HiveMind::PickupComponent::Update(const float& elapsedSec)
 			if (player->HasComponent<ScoreCounterComponent>())
 			{
 				player->GetComponent<ScoreCounterComponent>()->AddToCounter(m_Points);
+				if (GetGameObject()->HasComponent<SoundComponent>())
+				{
+					GetGameObject()->GetComponent<SoundComponent>()->PlaySoundByName("Pickup");
+				}
 				GetGameObject()->SetActive(false);
 			}
 		}

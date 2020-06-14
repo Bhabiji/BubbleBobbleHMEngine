@@ -6,14 +6,15 @@
 #include "Scene.h"
 #include "ControllerComponent.h"
 #include "LevelManager.h"
-HiveMind::ActorComponent::ActorComponent(const bool isPlayer, const bool isMaita, const bool isZenChan)
+HiveMind::ActorComponent::ActorComponent(const bool isPlayer, const bool isMaita, const bool isZenChan, const float& maxMoveSpeed)
 	:m_ActorState{ ActorState::IDLE }
-	, m_MovementSpeed{ 100.f }
+	, m_MovementSpeed{ 100 }
 	, m_Velocity{}
 	, m_JumpSpeed{ 200 }
+	, m_MaxFallSpeed{ 100 }
 	, m_JumpVel{}
 	, m_Gravity{ 100 }
-	, m_MaxRunSpeed{100.f}
+	, m_MaxRunSpeed{ maxMoveSpeed }
 	, m_FaceLeft{ false }
 	, m_IsOnGround{ false }
 	, m_IsJumping{false}
@@ -29,32 +30,24 @@ HiveMind::ActorComponent::ActorComponent(const bool isPlayer, const bool isMaita
 	, m_ToTargetCooldown{ 1.5f }
 	, m_flyTimer{0}
 	, m_SpawnPickup{ false }
-	,m_Counter{0.2f}
+	, m_Counter{0.2f}
 	, m_RespawnTimer{}
 
 {
 	if (m_IsMaita && m_IsZenChan)
 		throw("Cant be 2 separate entities at once");
+	if (m_IsMaita || m_IsZenChan)
+	{
+		m_IsEnemy = true;
+	}
 }
 
 HiveMind::ActorComponent::~ActorComponent()
 {
-	for (auto* pObserver : m_pObservers) 
-	{ delete pObserver; };
-}
-
-void HiveMind::ActorComponent::AddObserver(Observer* pObserver)
-{
-	m_pObservers[m_CurrentNrObservers] = pObserver;
-	m_CurrentNrObservers++;
-}
-
-void HiveMind::ActorComponent::Notify(GameObject* pSubject, Observer::Event event)
-{
-	UNREFERENCED_PARAMETER(pSubject);
-	for (unsigned int i{}; i < m_CurrentNrObservers; ++i)
+	for (size_t i{}; i < m_CurrentNrObservers; i++)
 	{
-		m_pObservers[i]->OnNotify(GetGameObject(), event);
+		delete m_pObservers[i];
+		m_pObservers[i] = nullptr;
 	}
 }
 
@@ -82,9 +75,9 @@ void HiveMind::ActorComponent::Update(const float& elapsedSec)
 			UpdateNPCStates(elapsedSec);
 
 	}
-	else if (m_IsNPC)
+	else if (m_ActorState == ActorComponent::ActorState::DEATH && m_IsEnemy)
 		HandleNPCDeath(elapsedSec);
-	else
+	else if (m_ActorState == ActorComponent::ActorState::DEATH && !m_IsNPC)
 		HandlePlayerDeath(elapsedSec);
 
 		UpdateMovement(elapsedSec);
@@ -101,24 +94,41 @@ bool HiveMind::ActorComponent::IsNPC()
 	return m_IsNPC;
 }
 
+bool HiveMind::ActorComponent::IsEnemy()
+{
+	return m_IsEnemy;
+}
+
 void HiveMind::ActorComponent::SetTarget(GameObject* pGameObject)
 {
 	m_pTargetToKill = pGameObject;
 }
 
+void HiveMind::ActorComponent::AddObserver(Observer* pObserver)
+{
+	m_pObservers[m_CurrentNrObservers] = pObserver;
+	m_CurrentNrObservers++;
+}
+
+void HiveMind::ActorComponent::Notify(Observer::Event event)
+{
+	for (UINT i{}; i < m_CurrentNrObservers; ++i)
+	{
+		m_pObservers[i]->OnNotify(GetGameObject(), event);
+	}
+}
+
 void HiveMind::ActorComponent::UpdateMovement(const float& elapsedSec)
 {
+	float maxVelocity{ 200 };
 	const ColliderBox& collider = GetGameObject()->GetComponent<CharacterColliderComponent>()->GetCollisionResults();
 	GetGameObject()->GetComponent<CharacterColliderComponent>()->ResetCollision();
 	if (!collider.bottom)
 	{
 		m_Counter += elapsedSec;
-	/*	if (!m_IsJumping)
-		{
-			m_Velocity.y += m_Gravity * elapsedSec * 2;
-		}
-		else*/
-			m_Velocity.y += m_Gravity * m_Counter *  elapsedSec * 2 ;
+		m_Velocity.y += m_Gravity * m_Counter *  elapsedSec * 2;
+		if (m_Velocity.y >= maxVelocity)
+			m_Velocity.y = maxVelocity;
 	}
 	else if (!m_IsJumping)
 	{
@@ -175,6 +185,7 @@ void HiveMind::ActorComponent::UpdateNPCStates(const float& elapsedSec)
 {
 	if (m_pTargetToKill)
 	{
+	
 		if (LevelManager::GetInstance().GetEnemyCount() == 1)
 		{
 			m_MovementSpeed = 160;
@@ -236,6 +247,10 @@ void HiveMind::ActorComponent::UpdateNPCStates(const float& elapsedSec)
 				Shoot();
 	}
 	
+	if (HiveMind::IsOverlapping(GetGameObject()->GetComponent<SpriteComponent>()->GetDest(), m_pTargetToKill->GetComponent<SpriteComponent>()->GetDest()))
+	{
+		m_pTargetToKill->GetComponent<ActorComponent>()->Notify(Observer::Event::ISHIT);
+	}
 
 }
 
@@ -255,11 +270,14 @@ void HiveMind::ActorComponent::HandleNPCDeath(const float& elapsedSec)
 
 	FPoint2 srcPos{ (tempComp->GetCroppedWidth() * m_ClipX),tempComp->GetCroppedHeight() * m_ClipY };
 	tempComp->SetLocalSpriteArea(srcPos, pos);
-
-	if (HiveMind::IsOverlapping(tempComp->GetDest(), m_pTargetToKill->GetComponent<SpriteComponent>()->GetDest()))
+	if (m_IsNPC)
 	{
-		m_FlyAroundPostDeath = true;
+		if (HiveMind::IsOverlapping(tempComp->GetDest(), m_pTargetToKill->GetComponent<SpriteComponent>()->GetDest()))
+		{
+			m_FlyAroundPostDeath = true;
+		}
 	}
+	else { GetGameObject()->SetActive(false); }
 	if (m_FlyAroundPostDeath)
 	{
 		const ColliderBox& collider = GetGameObject()->GetComponent<CharacterColliderComponent>()->GetCollisionResults();
@@ -282,7 +300,11 @@ void HiveMind::ActorComponent::HandleNPCDeath(const float& elapsedSec)
 	if (m_SpawnPickup)
 	{
 		GameObject* pPickup{ new GameObject() };
-		pPickup->CreateScorePickup(0, GetTransform()->GetPosition(), m_pTargetToKill);
+		if(m_IsMaita)
+			pPickup->CreateScorePickup(1, GetTransform()->GetPosition(), m_pTargetToKill);
+		else if(m_IsZenChan)
+			pPickup->CreateScorePickup(0, GetTransform()->GetPosition(), m_pTargetToKill);
+
 		SceneManager::GetInstance().GetActiveScene()->Add(pPickup);
 		GetGameObject()->SetActive(false);
 
@@ -304,6 +326,10 @@ void HiveMind::ActorComponent::HandlePlayerDeath(const float& elapsedSec)
 
 		}
 	}
+	else
+		Notify(Observer::Event::DEATH);
+	
+		
 }
 
 
@@ -336,6 +362,8 @@ void HiveMind::ActorComponent::MoveRight()
 		m_Velocity.x = m_MaxRunSpeed;
 
 	m_ClipY = 2;
+
+
 }
 
 void HiveMind::ActorComponent::Jump()
@@ -397,12 +425,22 @@ void HiveMind::ActorComponent::Shoot()
 				BulletManager::GetInstance().CreateFireBall(FPoint3(GetTransform()->GetPosition().x, GetTransform()->GetPosition().y + tempComp->GetDest().h / 3.f, 0.f), FPoint2(120, 0), 3.f, m_FaceLeft);
 		}
 		m_ShootingTimer = 0;
-
+		if (GetGameObject()->HasComponent<SoundComponent>())
+		{
+			GetGameObject()->GetComponent<SoundComponent>()->PlaySoundByName("Shoot");
+		}
 	}
 
 	m_ClipY = 0;
 	if (m_FaceLeft)
 		m_ClipY = 1;
+
+	if (m_IsEnemy)
+	{
+		m_ClipY = 1;
+		if (m_FaceLeft)
+			m_ClipY = 2;
+	}
 }
 
 void HiveMind::ActorComponent::Hurt()

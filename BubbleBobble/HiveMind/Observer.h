@@ -1,6 +1,10 @@
 #pragma once
 #pragma once
 #include "GameObject.h"
+#include "ActorComponent.h"
+#include "HealthComponent.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 namespace HiveMind
 {
@@ -10,37 +14,48 @@ namespace HiveMind
 	public:
 		enum class Event
 		{
-			HIT, PICKUP
+			ISHIT, DEATH
 		};
 		virtual ~Observer() = default;
-		virtual void OnNotify(GameObject* pCharacter, Event event) = 0;
+		virtual void OnNotify(GameObject* pActor, Event event) = 0;
 		
 	};
 
-	class HealthDisplay final : public Observer
+	class HealthObserver final : public Observer
 	{
 	public:
-		virtual ~HealthDisplay() = default;
-		virtual void OnNotify(GameObject* pSubject, Event event) override
+		virtual ~HealthObserver() = default;
+		virtual void OnNotify(GameObject* pActor, Event event) override
 		{
-			(pSubject);
-			if (event == Event::HIT) {};
-			//Get textrendercomponent from character and update it
+			if (event == Event::ISHIT) 
+			{
+				if(pActor->HasComponent<HealthComponent>())
+				{ 
+					if(pActor->GetComponent<HealthComponent>()->GetHealth() > 0)
+						pActor->GetComponent<HealthComponent>()->DecreaseHealth(1);
+					//pActor->GetComponent<ActorComponent>()->Death();
+
+				}
+			};
+			
 		}
 	private:
 	};
 
-	class ScoreDisplay final :public Observer
+	class DeathObserver final : public Observer
 	{
 	public:
-		virtual ~ScoreDisplay() = default;
-		virtual void OnNotify(GameObject* pSubject, Event event) override
+		virtual ~DeathObserver() = default;
+		virtual void OnNotify(GameObject* pActor, Event event) override
 		{
-			(pSubject);
+			if (event == Event::DEATH)
+			{
+				pActor->SetActive(false);
+				SceneManager::GetInstance().SetSceneActive("GameOver", true);
+			};
 
-			if (event == Event::PICKUP) {};
-			//Get textrendercomponent from character and update it
 		}
 	private:
 	};
+
 }

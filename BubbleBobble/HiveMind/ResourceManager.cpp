@@ -52,3 +52,12 @@ HiveMind::Font* HiveMind::ResourceManager::LoadFont(const std::string& file, uns
 {
 	return new Font(m_DataPath + file, size);
 }
+
+void HiveMind::ResourceManager::Destroy()
+{
+	if (m_pTextureMap)
+	{
+		m_pTextureMap->clear();
+		delete m_pTextureMap;
+	}
+}

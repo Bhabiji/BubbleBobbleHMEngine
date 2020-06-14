@@ -10,6 +10,7 @@ namespace HiveMind
 	public:
 		void Initialize();
 		void LoadGame() const;
+		void LoadGameScene() const;
 		void Cleanup();
 		void Run();
 	private:

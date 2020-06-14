@@ -43,6 +43,9 @@
     <Filter Include="Components\PhysicsRelatedComponent\ColliderComponents">
       <UniqueIdentifier>{d957b9fd-830d-40c6-aeb3-2c7942664761}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Buttons">
+      <UniqueIdentifier>{a802986f-435c-4dc1-9e1b-70a1df3a79ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -142,7 +145,16 @@
       <Filter>Components\PhysicsRelatedComponent</Filter>
     </ClCompile>
     <ClCompile Include="ControllerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonComponent.cpp">
+      <Filter>Components\Buttons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -276,7 +288,16 @@
       <Filter>Components\PhysicsRelatedComponent</Filter>
     </ClInclude>
     <ClInclude Include="ControllerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonComponent.h">
+      <Filter>Components\Buttons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,6 +13,7 @@ namespace HiveMind
 		void Init(const std::string& data);
 		Texture2D* LoadTexture(const std::string& file, const std::string& texName) const;
 		Font* LoadFont(const std::string& file, unsigned int size) const;
+		void Destroy();
 	private:
 		friend class Singleton<ResourceManager>;
 		ResourceManager() = default;

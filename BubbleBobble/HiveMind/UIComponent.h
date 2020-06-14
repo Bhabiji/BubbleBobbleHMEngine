@@ -24,7 +24,7 @@ namespace HiveMind
 
 	protected:
 		virtual void Initialize() override;
-		virtual void Update(const float& deltaTime) override;
+		virtual void Update(const float& elapsedSec) override;
 		virtual void Render() const override;
 	private:
 		bool m_NeedsUpdate;

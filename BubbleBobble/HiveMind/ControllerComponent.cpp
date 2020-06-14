@@ -4,7 +4,8 @@
 #include <SDL.h>
 
 
-HiveMind::ControllerComponent::ControllerComponent()
+HiveMind::ControllerComponent::ControllerComponent(const bool useController)
+	:m_UseController{useController}
 {
 }
 
@@ -29,11 +30,21 @@ void HiveMind::ControllerComponent::Initialize()
 	RightCommand rightCommand{};
 	ShootCommand shootCommand{};
 
+	if (m_UseController)
+	{
+		AddInputConfig(XINPUT_GAMEPAD_A, new JumpCommand());
+		AddInputConfig(XINPUT_GAMEPAD_DPAD_LEFT, new LeftCommand());
+		AddInputConfig(XINPUT_GAMEPAD_DPAD_RIGHT,new RightCommand());
+		AddInputConfig(XINPUT_GAMEPAD_B, new ShootCommand());
+	}
+	else
+	{
+		AddInputConfig('W', new JumpCommand());
+		AddInputConfig('A', new LeftCommand());
+		AddInputConfig('D', new RightCommand());
+		AddInputConfig(VK_SPACE, new ShootCommand());
+	}
 
-	AddInputConfig(XINPUT_GAMEPAD_A, new JumpCommand());
-	AddInputConfig(XINPUT_GAMEPAD_DPAD_LEFT, new LeftCommand());
-	AddInputConfig(XINPUT_GAMEPAD_DPAD_RIGHT,new RightCommand());
-	AddInputConfig(XINPUT_GAMEPAD_B, new ShootCommand());
 }
 
 bool HiveMind::ControllerComponent::ProcessInput()
@@ -54,7 +65,14 @@ bool HiveMind::ControllerComponent::ProcessInput()
 
 bool HiveMind::ControllerComponent::IsPressed(const WORD& gamepadButton) const
 {
-	if ((m_ControllerState.Gamepad.wButtons & gamepadButton) != 0)
+	if (m_UseController)
+	{
+		if ((m_ControllerState.Gamepad.wButtons & gamepadButton) != 0)
+		{
+			return true;
+		}
+	}
+	else if (GetAsyncKeyState(gamepadButton))
 	{
 		return true;
 	}
@@ -69,15 +87,17 @@ void HiveMind::ControllerComponent::HandleInput()
 		ActorComponent* pActorComp{ GetGameObject()->GetComponent<ActorComponent>() };
 		for (InputConfig& inputConfig : m_pCommandInput)
 		{
-
-			if (inputConfig.pCommand != nullptr && IsPressed(inputConfig.GamepadButton))
+			if (pActorComp->GetActorState() != ActorComponent::ActorState::DEATH)
 			{
-				inputConfig.pCommand->Execute(pActorComp);
-				buttonPressed = true;
-			}
-			if(!buttonPressed)
-			{
-				inputConfig.pCommand->SetIdle(pActorComp);
+				if (inputConfig.pCommand != nullptr && IsPressed(inputConfig.GamepadButton))
+				{
+					inputConfig.pCommand->Execute(pActorComp);
+					buttonPressed = true;
+				}
+				if(!buttonPressed)
+				{
+					inputConfig.pCommand->SetIdle(pActorComp);
+				}
 			}
 		}
 	}

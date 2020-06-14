@@ -64,6 +64,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\vld.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -93,21 +94,22 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>HM_PLATFORM_WINDOWS;HM_BUILD_DLL;HM_BUILD_DLL_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HM_PLATFORM_WINDOWS;HM_BUILD_DLL;WIN32;HM_BUILD_DLL_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\glm;%(AdditionalIncludeDirectories)$(SolutionDir)3rdParty\Catch2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\Fmod\inc;$(SolutionDir)3rdParty\glm\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;xinput.lib;%(AdditionalDependencies);</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x86\;$(SolutionDir)3rdParty\SDL2_image\lib\x86\;$(SolutionDir)3rdParty\SDL2_ttf\lib\x86;%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;fmod_vc.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x86\;$(SolutionDir)3rdParty\SDL2_image\lib\x86\;$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\;$(SolutionDir)3rdParty\Fmod\lib\x86\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutputPath)HiveMind.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
+      <Command>xcopy "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\HiveMind.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2\lib\x86\SDL2.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
+xcopy "$(SolutionDir)3rdParty\Fmod\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -116,19 +118,20 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(SolutionDir)bin\$(Confi
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HM_PLATFORM_WINDOWS;HM_BUILD_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\glm\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\Fmod\inc;$(SolutionDir)3rdParty\glm\;$(SolutionDir)3rdParty\vld\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x64\;$(SolutionDir)3rdParty\SDL2_image\lib\x64\;$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;fmod_vc.lib;xinput.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x64\;$(SolutionDir)3rdParty\SDL2_image\lib\x64\;$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\;$(SolutionDir)3rdParty\Fmod\lib\x64\;$(SolutionDir)3rdParty\vld\lib\x64\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(OutputPath)HiveMind.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2\lib\x64\SDL2.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x64\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\Fmod\lib\x64\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -137,9 +140,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)$(Platform)
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>HM_PLATFORM_WINDOWS;HM_BUILD_DLL;HM_BUILD_DLLNDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HM_PLATFORM_WINDOWS;HM_BUILD_DLL;WIN32;HM_BUILD_DLLNDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\glm;%(AdditionalIncludeDirectories)$(SolutionDir)3rdParty\Catch2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\Fmod\inc;$(SolutionDir)3rdParty\glm\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,13 +150,14 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)$(Platform)
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x86\;$(SolutionDir)3rdParty\SDL2_image\lib\x86\;$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x86\;$(SolutionDir)3rdParty\SDL2_image\lib\x86\;$(SolutionDir)3rdParty\Fmod\lib\$(Arch);$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(OutputPath)HiveMind.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2\lib\x86\SDL2.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
+xcopy "$(SolutionDir)3rdParty\Fmod\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -164,21 +168,22 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(SolutionDir)bin\$(Confi
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HM_PLATFORM_WINDOWS;HM_BUILD_DLL;HM_BUILD_DLLNDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\glm\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\Fmod\inc;$(SolutionDir)3rdParty\glm\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x64\;$(SolutionDir)3rdParty\SDL2_image\lib\x64\;$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;xinput.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x64\;$(SolutionDir)3rdParty\SDL2_image\lib\x64\;$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\;$(SolutionDir)3rdParty\Fmod\lib\x64\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(OutputPath)HiveMind.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2\lib\x64\SDL2.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x64\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
+xcopy "$(SolutionDir)3rdParty\Fmod\lib\x64\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -187,6 +192,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)bin\$(Confi
     <ClCompile Include="BlockColliderComponent.cpp" />
     <ClCompile Include="BubbleBobble.cpp" />
     <ClCompile Include="BulletManager.cpp" />
+    <ClCompile Include="ButtonComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="HealthCounterComponent.cpp" />
     <ClCompile Include="LifeTimeComponent.cpp" />
@@ -209,6 +215,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)bin\$(Confi
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="CounterComponent.cpp" />
     <ClCompile Include="ScoreCounterComponent.cpp" />
+    <ClCompile Include="SoundComponent.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />
@@ -223,6 +231,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)bin\$(Confi
     <ClInclude Include="BlockColliderComponent.h" />
     <ClInclude Include="BubbleBobble.h" />
     <ClInclude Include="BulletManager.h" />
+    <ClInclude Include="ButtonComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HealthCounterComponent.h" />
@@ -255,6 +264,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)bin\$(Confi
     <ClInclude Include="ScoreCounterComponent.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="ActorComponent.h" />
+    <ClInclude Include="SoundComponent.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />

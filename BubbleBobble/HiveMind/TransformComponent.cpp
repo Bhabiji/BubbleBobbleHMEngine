@@ -32,7 +32,7 @@ void HiveMind::TransformComponent::Update(const float& deltaTime)
 		else if (objRect.x > 640)
 			m_Position.x = 3;
 		if (objRect.y + objRect.h < 0)
-			m_Position.x = 480 - 2;
+			m_Position.y = 480 - 2;
 		else if (objRect.y > 480)
 			m_Position.y = 2;
 	}

@@ -1,5 +1,5 @@
 #include "Math.h"
-
+//Func overloading
 bool HiveMind::IsOverlapping(const FPoint2& objPos, const HiveMind::RectI& otherArea)
 {
 	if (objPos.x >= otherArea.x && objPos.x <= (otherArea.x + otherArea.w) && objPos.y >= otherArea.y && objPos.y <= (otherArea.y + otherArea.h))
@@ -8,6 +8,16 @@ bool HiveMind::IsOverlapping(const FPoint2& objPos, const HiveMind::RectI& other
 	}
 	return false;
 }
+
+bool HiveMind::IsOverlapping(const Int2& objPos, const HiveMind::RectI& otherArea)
+{
+	if (objPos.x >= otherArea.x && objPos.x <= (otherArea.x + otherArea.w) && objPos.y >= otherArea.y && objPos.y <= (otherArea.y + otherArea.h))
+	{
+		return true;
+	}
+	return false;
+}
+
 
 bool HiveMind::IsOverlapping(const HiveMind::RectI& area, const HiveMind::RectI& otherArea)
 {

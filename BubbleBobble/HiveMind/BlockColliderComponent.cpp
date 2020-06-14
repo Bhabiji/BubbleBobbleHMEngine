@@ -3,11 +3,14 @@
 #include "Renderer.h"
 HiveMind::BlockColliderComponent::BlockColliderComponent()
 	:ColliderComponent()
+	, m_CustomSize{false}
+
 {
 }
-
-HiveMind::BlockColliderComponent::BlockColliderComponent(const FPoint2& pos, const RectI& collisionArea)
-	:ColliderComponent(pos,collisionArea)
+//writew init func for m_size 
+HiveMind::BlockColliderComponent::BlockColliderComponent(const FPoint2& pos, const Float2& size)
+	:ColliderComponent(pos,size)
+	,m_CustomSize{true}
 {
 }
 
@@ -17,18 +20,16 @@ HiveMind::BlockColliderComponent::~BlockColliderComponent()
 
 bool HiveMind::BlockColliderComponent::IsCollidingVertically(const FPoint2& point)
 {
-	if (m_pGameObject->HasComponent<SpriteComponent>())
-		m_CollisionArea = m_pGameObject->GetComponent<SpriteComponent>()->GetDest();
-	if (point.x >= m_CollisionArea.x && point.x <= (m_CollisionArea.x + m_CollisionArea.w) && point.y >= m_CollisionArea.y && point.y <= m_CollisionArea.y + 4)
+
+	if (point.x >= m_Pos.x && point.x <= (m_Pos.x + m_Size.x) && point.y >= m_Pos.y && point.y <= m_Pos.y + 4)
 		return true;
 	return false;
 }
 
 bool HiveMind::BlockColliderComponent::IsCollidingHorizontally(const FPoint2& point)
 {
-	if (m_pGameObject->HasComponent<SpriteComponent>())
-		m_CollisionArea = m_pGameObject->GetComponent<SpriteComponent>()->GetDest();
-	if (point.x >= m_CollisionArea.x && point.x <= (m_CollisionArea.x + m_CollisionArea.w) && point.y >= m_CollisionArea.y && point.y <= m_CollisionArea.y + m_CollisionArea.w)
+	
+	if (point.x >= m_Pos.x && point.x <= (m_Pos.x + m_Size.x) && point.y >= m_Pos.y && point.y <= m_Pos.y + m_Size.y)
 		return true;
 	return false;
 }
@@ -38,11 +39,24 @@ void HiveMind::BlockColliderComponent::RayHitObstacle(const GameObject* objectsT
 {
 }
 
+void HiveMind::BlockColliderComponent::Initialize()
+{
+
+	m_IsInitialized = true;
+	if (!m_CustomSize)
+	{
+		if (m_pGameObject->HasComponent<SpriteComponent>())
+			m_Size = Float2{ m_pGameObject->GetComponent<SpriteComponent>()->GetDest().w, m_pGameObject->GetComponent<SpriteComponent>()->GetDest().h };
+	}
+}
+
 void HiveMind::BlockColliderComponent::Update(const float& deltaTime)
 {
+	m_Pos = GetGameObject()->GetTransform()->GetPosition();
 }
 
 void HiveMind::BlockColliderComponent::Render() const
 {
-	SDL_RenderDrawRect(Renderer::GetInstance().GetSDLRenderer(), &m_pGameObject->GetComponent<SpriteComponent>()->GetDest());
+	const SDL_Rect rect{ m_Pos.x, m_Pos.y, m_Size.x, m_Size.y };
+	SDL_RenderDrawRect(Renderer::GetInstance().GetSDLRenderer(), &rect );
 }

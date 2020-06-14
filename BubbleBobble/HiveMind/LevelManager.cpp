@@ -11,18 +11,19 @@ HiveMind::LevelManager::~LevelManager()
 
 void HiveMind::LevelManager::AddLevel(const std::wstring& pathName, Scene* scene)
 {
-	//Don't want to parse the next level, always want the next level to be ready for whatever reason
-	Scene* currScene = SceneManager::GetInstance().GetActiveScene();
+	
 	ParseLevel(pathName);
-	for(size_t i = 0; m_pLevelBlocks.at(m_CurrentLevel).first.size() > i; i++)
-		currScene->Add(m_pLevelBlocks.at(m_CurrentLevel).first[i]);
+	for (size_t i = 0; m_pLevelBlocks.at(m_CurrentLevel).first.size() > i; i++)
+	{
+		scene->Add(m_pLevelBlocks.at(m_CurrentLevel).first[i]);
+	}
 	//ADD EVERY BLOCVK OF THE LEVELID IN MAP
 }
 
 
 std::vector<HiveMind::GameObject*> HiveMind::LevelManager::GetCurrentLevel() const
 {
-	return m_pLevelBlocks.at(m_CurrentLevel).first; //only return this if there are atleast 2 levels, out of bounds otherwise
+	return m_pLevelBlocks.at(m_CurrentLevel).first;
 }
 
 
@@ -85,6 +86,15 @@ void HiveMind::LevelManager::ParseLevel(const std::wstring& pathName)
 
 					currCol++;
 				}
+				else if (block == 'Z')
+				{
+					Float3 pos{ currCol, currRow,0 };
+					m_pLevelBlocks[levelName].first.push_back(new GameObject());
+					m_pLevelBlocks[levelName].first.back()->CreateZenChan(pos);
+					++m_pLevelBlocks[levelName].second; //addToEnemyCounter to check hm enemies there are in the level
+
+					currCol++;
+				}
 				else if (block == '\r' || block == '\n')
 				{
 					currRow++;
@@ -107,7 +117,12 @@ void HiveMind::LevelManager::decreaseEnemyCount(const int amount)
 int HiveMind::LevelManager::GetEnemyCount() const
 {
  //only return this if there are atleast 2 levels, out of bounds otherwise
-	return m_pLevelBlocks.at(m_CurrentLevel).second;
+
+	if (m_pLevelBlocks.find(m_CurrentLevel) != m_pLevelBlocks.end())
+	{
+		return m_pLevelBlocks.at(m_CurrentLevel).second;
+	}
+	return 0;
 }
 
 void HiveMind::LevelManager::LoadNextLevel()
@@ -115,8 +130,28 @@ void HiveMind::LevelManager::LoadNextLevel()
 	Scene* currScene = SceneManager::GetInstance().GetActiveScene();
 	for (size_t i = 0; m_pLevelBlocks.at(m_CurrentLevel).first.size() > i; i++)
 		currScene->Remove(m_pLevelBlocks.at(m_CurrentLevel).first[i]);
+	for (size_t i = 0; m_pLevelBlocks.at(m_CurrentLevel).first.size() > i; i++)
+	{
+		delete m_pLevelBlocks.at(m_CurrentLevel).first[i];
+		m_pLevelBlocks.at(m_CurrentLevel).first[i] = nullptr;
+	}
+	m_pLevelBlocks.at(m_CurrentLevel).first.clear();
+	m_pLevelBlocks.erase(m_CurrentLevel);
 
 	m_CurrentLevel++;
-	for (size_t i = 0; m_pLevelBlocks.at(m_CurrentLevel).first.size() > i; i++)
-		currScene->Add(m_pLevelBlocks.at(m_CurrentLevel).first[i]);
+	if (m_pLevelBlocks.find(m_CurrentLevel) != m_pLevelBlocks.end())
+	{
+		for (size_t i = 0; m_pLevelBlocks.at(m_CurrentLevel).first.size() > i; i++)
+			currScene->Add(m_pLevelBlocks.at(m_CurrentLevel).first[i]);
+	}
+	else
+	{
+		m_CurrentLevel = 0;
+		SceneManager::GetInstance().ResetScene("SinglePlayerGame");
+		SceneManager::GetInstance().SetSceneActive("MainMenu", true);
+	}
+}
+
+void HiveMind::LevelManager::Destroy()
+{
 }

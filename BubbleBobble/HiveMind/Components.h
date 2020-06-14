@@ -7,8 +7,9 @@
 #include "RenderComponent.h"
 #include "TextComponent.h"
 
-//UI
+//UI AND HUD
 #include "UIComponent.h"
+#include "ButtonComponent.h"
 
 #include "ActorComponent.h"
 #include "SpriteComponent.h"
@@ -31,3 +32,6 @@
 
 //CHARACTERS
 #include "HealthComponent.h"
+
+//SOUND
+#include "SoundComponent.h"

@@ -27,7 +27,7 @@ namespace HiveMind
 	/*	void SetTextTexture(const std::string& text, const std::string& font);*/
 	protected:
 		virtual void Initialize() override;
-		void Update(const float& deltaTime);
+		void Update(const float& elapsedSec);
 		void Render() const;
 		Texture2D* m_pTexture;
 		FPoint2 m_Pos;

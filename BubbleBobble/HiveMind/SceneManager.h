@@ -13,11 +13,14 @@ namespace HiveMind
 		Scene* GetScene(const std::string& name) const;
 		Scene* GetActiveScene() const;
 
+		void LoadGameScene();
+		void LoadMultiPlayerGameScene();
+		void ResetScene(const std::string& sceneName);
 		void SetSceneActive(const std::string& sceneName, const bool toggle);
 		void DeleteInactives();
 		void Initialize();
 		void PostInitialize();
-
+		void Destroy();
 		void Update(const float& deltaTime);
 		void Render();
 	private:

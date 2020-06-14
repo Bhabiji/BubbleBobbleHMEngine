@@ -12,7 +12,7 @@ namespace HiveMind
 	{
 	public:
 		CharacterColliderComponent();
-		CharacterColliderComponent(const FPoint2& pos, const RectI& collisionArea);
+		CharacterColliderComponent(const FPoint2& pos, const Float2& size);
 		virtual ~CharacterColliderComponent();
 		virtual void RayHitObstacle(const GameObject* objectsToCheck, const FPoint2& objPos);
 		virtual bool IsCollidingVertically(const FPoint2& Point);

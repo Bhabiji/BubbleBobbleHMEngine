@@ -22,7 +22,6 @@ HiveMind::RenderComponent::RenderComponent(const bool enableStaticPos, const FPo
 
 HiveMind::RenderComponent::~RenderComponent()
 {
-	delete m_pTexture;
 }
 
 void HiveMind::RenderComponent::SetTexture(const std::string& fileName, const std::string& IDName)
@@ -51,11 +50,11 @@ void HiveMind::RenderComponent::Initialize()
 	m_IsInitialized = true;
 }
 
-void HiveMind::RenderComponent::Update(const float& deltaTime)
+void HiveMind::RenderComponent::Update(const float& elapsedSec)
 {
 	if (!m_IsStaticPos)
 		m_Pos = GetTransform()->GetPosition();
-	(deltaTime);
+	(elapsedSec);
 }
 
 void HiveMind::RenderComponent::Render() const

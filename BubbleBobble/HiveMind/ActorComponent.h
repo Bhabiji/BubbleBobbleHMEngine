@@ -14,10 +14,8 @@ namespace HiveMind
 		{
 			LEFT, RIGHT, IDLE, JUMP, SHOOT, JUMPWHILERUNNING, SHOOTWHILERUNNING, DEATH, FLYINGAWAY, HURT
 		};
-		ActorComponent(const bool isPlayer, const bool isMaita, const bool isZenChan);
+		ActorComponent(const bool isPlayer, const bool isMaita, const bool isZenChan, const float& maxMoveSpeed);
 		~ActorComponent();
-		void AddObserver(Observer* pObserver);
-		void Notify(GameObject* pSubject, Observer::Event event);
 		ActorState GetActorState() const;
 		FVector2 GetVelocity() const;
 
@@ -29,7 +27,14 @@ namespace HiveMind
 		void Shoot();
 		void Hurt();
 		virtual bool IsNPC();
+		virtual bool IsEnemy();
+
 		void SetTarget(GameObject* pGameObject);
+
+		//Observer poattern
+		void AddObserver(Observer* pObserver);
+		void Notify(Observer::Event event);
+
 
 	protected:
 
@@ -37,6 +42,13 @@ namespace HiveMind
 		virtual void Update(const float& deltaTime) override;
 		virtual void Render() const override;
 	private:
+
+		static const unsigned int MAX_OBSERVERS = 10;
+		unsigned int m_CurrentNrObservers = 0;
+
+		Observer* m_pObservers[MAX_OBSERVERS]{};
+
+
 		void UpdateMovement(const float& elapsedSec);
 
 		void UpdateCombat(const float& elapsedSec);
@@ -45,21 +57,18 @@ namespace HiveMind
 		void HandleNPCDeath(const float& elapsedSec);
 		void HandlePlayerDeath(const float& elapsedSec);
 
-
-		static const unsigned int MAX_OBSERVERS = 10;
-		unsigned int m_CurrentNrObservers = 0;
-		Observer* m_pObservers[MAX_OBSERVERS];
-
 		float m_RespawnTimer;
 
 		ActorState m_ActorState;
 		bool m_FaceLeft;
 		bool m_IsOnGround;
+		bool m_IsEnemy;
 		int m_ClipX;
 		int m_ClipY;
 		int m_AnimFrame;
 		float m_AnimTime;
 		float m_JumpVel;
+		float m_MaxFallSpeed;
 		float m_MovementSpeed;
 		float m_Gravity;
 		float m_JumpSpeed;

@@ -2,6 +2,8 @@
 #ifdef HM_PLATFORM_WINDOWS
 #include "Core.h"
 #include  "BubbleBobble.h"
+#include <vld.h>
+
 #undef main
 int main(int, char[])
 {
