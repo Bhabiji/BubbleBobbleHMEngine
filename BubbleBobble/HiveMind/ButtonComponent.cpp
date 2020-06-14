@@ -37,8 +37,8 @@ void HiveMind::ButtonComponent::Initialize()
 
 void HiveMind::ButtonComponent::Render() const
 {
-	const SDL_Rect rect{ GetGameObject()->GetTransform()->GetPosition().x, GetGameObject()->GetTransform()->GetPosition().y, m_Size.x, m_Size.y };
-	SDL_SetRenderDrawColor(Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, m_Alpha);
+	const SDL_Rect rect{ int(GetGameObject()->GetTransform()->GetPosition().x), int(GetGameObject()->GetTransform()->GetPosition().y), m_Size.x, m_Size.y };
+	SDL_SetRenderDrawColor(Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, Uint8(m_Alpha));
 	SDL_RenderDrawRect(Renderer::GetInstance().GetSDLRenderer(), &rect);
 	SDL_SetRenderDrawColor(Renderer::GetInstance().GetSDLRenderer(), 0, 0, 0, 1);
 

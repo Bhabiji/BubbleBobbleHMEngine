@@ -37,6 +37,8 @@ bool HiveMind::BlockColliderComponent::IsCollidingHorizontally(const FPoint2& po
 
 void HiveMind::BlockColliderComponent::RayHitObstacle(const GameObject* objectsToCheck, const FPoint2& objPos)
 {
+	(objectsToCheck);
+	(objPos);
 }
 
 void HiveMind::BlockColliderComponent::Initialize()
@@ -50,13 +52,14 @@ void HiveMind::BlockColliderComponent::Initialize()
 	}
 }
 
-void HiveMind::BlockColliderComponent::Update(const float& deltaTime)
+void HiveMind::BlockColliderComponent::Update(const float& elapsedSec)
 {
+	(elapsedSec);
 	m_Pos = GetGameObject()->GetTransform()->GetPosition();
 }
 
 void HiveMind::BlockColliderComponent::Render() const
 {
-	const SDL_Rect rect{ m_Pos.x, m_Pos.y, m_Size.x, m_Size.y };
+	const SDL_Rect rect{ int(m_Pos.x),  int(m_Pos.y),  int(m_Size.x), int(m_Size.y) };
 	SDL_RenderDrawRect(Renderer::GetInstance().GetSDLRenderer(), &rect );
 }

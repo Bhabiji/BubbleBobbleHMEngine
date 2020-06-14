@@ -153,7 +153,6 @@ void HiveMind::GameObject::CreateFireBall(const bool isLookingLeft, const FPoint
 	}
 
 	pSpriteComponent->SetLocalSpriteArea(srcPos, pos);
-	CharacterColliderComponent* pCollider{ new CharacterColliderComponent(pos, Float2{pSpriteComponent->GetDest().w,pSpriteComponent->GetDest().h}) };
 	AddComponent(pSpriteComponent);
 	AddComponent(pProjectileComp);
 	AddComponent(pMortalComp);

@@ -22,6 +22,7 @@ int HiveMind::HealthComponent::GetHealth() const
 
 void HiveMind::HealthComponent::Update(const float& elapsedSec)
 {
+	(elapsedSec);
 	if (GetGameObject()->HasComponent<HealthCounterComponent>())
 	{
 		GetGameObject()->GetComponent<HealthCounterComponent>()->SetCounter(m_Health);

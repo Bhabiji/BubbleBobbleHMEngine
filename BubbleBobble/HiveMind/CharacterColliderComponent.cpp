@@ -110,11 +110,13 @@ void HiveMind::CharacterColliderComponent::RayHitObstacle(const GameObject* othe
 
 bool HiveMind::CharacterColliderComponent::IsCollidingVertically(const FPoint2& Point)
 {
+	(Point);
 	return false;
 }
 
 bool HiveMind::CharacterColliderComponent::IsCollidingHorizontally(const FPoint2& Point)
 {
+	(Point);
 	return false;
 }
 
@@ -131,8 +133,9 @@ void HiveMind::CharacterColliderComponent::ResetCollision()
 
 
 
-void HiveMind::CharacterColliderComponent::Update(const float& deltaTime)
+void HiveMind::CharacterColliderComponent::Update(const float& elapsedSec)
 {
+	(elapsedSec);
 	std::vector<GameObject*> pTemp = SceneManager::GetInstance().GetActiveScene()->GetObjects();
 	for (size_t i{ 0 }; i < pTemp.size(); i++)
 	{

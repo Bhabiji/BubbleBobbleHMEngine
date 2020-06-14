@@ -105,11 +105,11 @@
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x86\;$(SolutionDir)3rdParty\SDL2_image\lib\x86\;$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\;$(SolutionDir)3rdParty\Fmod\lib\x86\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\HiveMind.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2\lib\x86\SDL2.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\Fmod\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y</Command>
+      <Command>xcopy "$(OutputPath)HiveMind.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2\lib\x86\SDL2.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x86\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\Fmod\lib\x86\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -149,15 +149,15 @@ xcopy "$(SolutionDir)3rdParty\Fmod\lib\x64\*.dll" "$(SolutionDir)$(Platform)\$(C
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x86\;$(SolutionDir)3rdParty\SDL2_image\lib\x86\;$(SolutionDir)3rdParty\Fmod\lib\$(Arch);$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;fmod_vc.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x86\;$(SolutionDir)3rdParty\SDL2_image\lib\x86\;$(SolutionDir)3rdParty\Fmod\lib\x86\;$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutputPath)HiveMind.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2\lib\x86\SDL2.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\Fmod\lib\x86\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y</Command>
+      <Command>xcopy "$(OutputPath)HiveMind.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2\lib\x86\SDL2.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x86\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\Fmod\lib\x86\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -179,11 +179,11 @@ xcopy "$(SolutionDir)3rdParty\Fmod\lib\x86\*.dll" "$(SolutionDir)bin\$(Configura
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\x64\;$(SolutionDir)3rdParty\SDL2_image\lib\x64\;$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\;$(SolutionDir)3rdParty\Fmod\lib\x64\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutputPath)HiveMind.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2\lib\x64\SDL2.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x64\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y
-xcopy "$(SolutionDir)3rdParty\Fmod\lib\x64\*.dll" "$(SolutionDir)bin\$(Configuration)_$(Platform)_Post\BubbleBobble\" /R /Y</Command>
+      <Command>xcopy "$(OutputPath)HiveMind.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2\lib\x64\SDL2.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x64\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y
+xcopy "$(SolutionDir)3rdParty\Fmod\lib\x64\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

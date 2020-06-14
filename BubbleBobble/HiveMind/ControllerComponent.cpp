@@ -15,6 +15,7 @@ HiveMind::ControllerComponent::~ControllerComponent()
 
 void HiveMind::ControllerComponent::Update(const float& elapsedSec)
 {
+	(elapsedSec);
 	ProcessInput();
 	HandleInput();
 }
